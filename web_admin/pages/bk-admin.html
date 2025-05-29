@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>TeluSafe - Bimbingan Konseling Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'telusafe-red': '#C43B3B',
+                        'telusafe-light-red': '#F44343',
+                        'telusafe-pink': '#FEEAEA',
+                        'telusafe-dark-red': '#A63333'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+        }
+        
+        .sidebar-active {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+        
+        .hover-effect:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transform: translateX(4px);
+            transition: all 0.2s ease;
+        }
+        
+        .card-clean {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .stat-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+        
+        .table-row:hover {
+            background: #f8fafc;
+        }
+        
+        .counter {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen text-gray-900 font-inter">
+    <div class="flex max-w-7xl mx-auto bg-white shadow-sm border border-gray-200">
+        <!-- Sidebar -->
+        <aside class="bg-gradient-to-b from-telusafe-red to-telusafe-dark-red w-64 flex flex-col p-6 space-y-6 text-white">
+            <div class="flex items-center space-x-3 mb-4">
+                <img src="../assets/Logo.png" alt="TeluSafe Logo" class="w-10 h-10 object-contain"/>
+                <span class="font-semibold text-xl">TeluSafe</span>
+            </div>
+            
+            <nav class="flex flex-col space-y-2 text-sm font-medium">
+                <a class="flex items-center space-x-3 text-white p-3 hover-effect transition-all duration-200" href="#" onclick="navigateTo('home')">
+                    <i class="fas fa-th-large w-5"></i>
+                    <span>Beranda</span>
+                </a>
+                
+                <a class="flex items-center space-x-3 text-white p-3 hover-effect transition-all duration-200" href="#" onclick="navigateTo('ppks')">
+                    <i class="fas fa-shield-alt w-5"></i>
+                    <span>PPKS</span>
+                </a>
+                
+                <div class="flex items-center space-x-3 text-white p-3 sidebar-active">
+                    <i class="fas fa-user-friends w-5"></i>
+                    <span>Bimbingan Konseling</span>
+                </div>
+                
+                <a class="flex items-center space-x-3 text-white p-3 hover-effect transition-all duration-200" href="#" onclick="navigateTo('emosi')">
+                    <i class="fas fa-heart w-5"></i>
+                    <span>Emosi Mahasiswa</span>
+                </a>
+                
+                <a class="flex items-center space-x-3 text-white p-3 hover-effect transition-all duration-200" href="#" onclick="navigateTo('artikel')">
+                    <i class="fas fa-newspaper w-5"></i>
+                    <span>Artikel</span>
+                </a>
+            </nav>
+            
+            <button class="mt-auto flex items-center space-x-3 text-white text-sm opacity-80 hover:opacity-100 p-3 hover-effect transition-all duration-200" onclick="logout()">
+                <i class="fas fa-sign-out-alt w-5"></i>
+                <span>Logout</span>
+            </button>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 p-8 space-y-8 bg-gray-50">
+            <!-- Header -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-telusafe-red rounded-lg flex items-center justify-center">
+                        <i class="fas fa-user-friends text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Bimbingan Konseling Admin</h1>
+                        <p class="text-gray-600 text-sm">Manajemen Layanan Konseling & Psikolog</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input class="w-80 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red focus:border-transparent" placeholder="🔍 Cari psikolog..." type="search" id="searchInput"/>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 bg-white rounded-lg p-2 border border-gray-200">
+                        <div class="w-10 h-10 rounded-lg bg-telusafe-red flex items-center justify-center text-white font-bold">
+                            MQ
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold">Musfiq</p>
+                            <p class="text-xs text-gray-500">BK Admin</p>
+                        </div>
+                    </div>
+                    
+                    <button class="relative p-3 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                        <i class="fas fa-bell text-gray-600"></i>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="grid grid-cols-4 gap-6">
+                <div class="card-clean p-6 stat-hover cursor-pointer" onclick="showDetails('students')">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-user-graduate text-telusafe-red text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-gray-900 counter" data-count="100">0</p>
+                        <p class="text-sm font-medium text-gray-600">Mahasiswa Konseling</p>
+                        <p class="text-xs text-gray-500 mt-1">Aktif saat ini</p>
+                    </div>
+                </div>
+                
+                <div class="card-clean p-6 stat-hover cursor-pointer" onclick="showDetails('psychologists')">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-user-md text-yellow-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-gray-900 counter" data-count="10">0</p>
+                        <p class="text-sm font-medium text-gray-600">Psikolog Tersedia</p>
+                        <p class="text-xs text-gray-500 mt-1">Siap melayani</p>
+                    </div>
+                </div>
+                
+                <div class="card-clean p-6 stat-hover cursor-pointer" onclick="showDetails('new-sessions')">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-plus-circle text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-gray-900 counter" data-count="5">0</p>
+                        <p class="text-sm font-medium text-gray-600">Konseling Baru</p>
+                        <p class="text-xs text-gray-500 mt-1">Minggu ini</p>
+                    </div>
+                </div>
+                
+                <div class="card-clean p-6 stat-hover cursor-pointer" onclick="showDetails('follow-up')">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-redo text-purple-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-gray-900 counter" data-count="8">0</p>
+                        <p class="text-sm font-medium text-gray-600">Konseling Lanjutan</p>
+                        <p class="text-xs text-gray-500 mt-1">Dalam proses</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Section - Made Bigger -->
+            <div class="card-clean p-8">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Tren Mahasiswa Konseling</h3>
+                        <p class="text-gray-600 text-sm mt-1">Perkembangan jumlah mahasiswa yang mengikuti konseling</p>
+                    </div>
+                    <button class="flex items-center space-x-2 text-gray-600 border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50" onclick="exportData()">
+                        <i class="fas fa-download"></i>
+                        <span>Export</span>
+                    </button>
+                </div>
+                
+                <!-- Bigger Chart -->
+                <div class="w-full h-96">
+                    <svg class="w-full h-full" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Grid lines -->
+                        <line stroke="#E5E7EB" stroke-width="1" x1="80" x2="720" y1="80" y2="80"/>
+                        <line stroke="#E5E7EB" stroke-width="1" x1="80" x2="720" y1="140" y2="140"/>
+                        <line stroke="#E5E7EB" stroke-width="1" x1="80" x2="720" y1="200" y2="200"/>
+                        <line stroke="#E5E7EB" stroke-width="1" x1="80" x2="720" y1="260" y2="260"/>
+                        <line stroke="#E5E7EB" stroke-width="1" x1="80" x2="720" y1="320" y2="320"/>
+                        
+                        <!-- Gradient fill -->
+                        <defs>
+                            <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#C43B3B;stop-opacity:0.3"/>
+                                <stop offset="100%" style="stop-color:#C43B3B;stop-opacity:0"/>
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Area fill -->
+                        <path d="M80 300C160 290 240 280 320 250C400 220 480 210 560 220C640 230 720 210 720 210 L720 320 L80 320 Z" 
+                              fill="url(#chartGradient)"/>
+                        
+                        <!-- Main trend line -->
+                        <path d="M80 300C160 290 240 280 320 250C400 220 480 210 560 220C640 230 720 210 720 210" 
+                              stroke="#C43B3B" stroke-width="4" fill="none"/>
+                        
+                        <!-- Data points -->
+                        <circle cx="320" cy="250" fill="#C43B3B" r="6" stroke="white" stroke-width="3"/>
+                        <circle cx="480" cy="210" fill="#C43B3B" r="6" stroke="white" stroke-width="3"/>
+                        <circle cx="560" cy="220" fill="#C43B3B" r="6" stroke="white" stroke-width="3"/>
+                        <circle cx="720" cy="210" fill="#C43B3B" r="8" stroke="white" stroke-width="3"/>
+                        
+                        <!-- Month labels -->
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" x="120" y="360">Jan</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" x="200" y="360">Feb</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" x="280" y="360">Mar</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" x="360" y="360">Apr</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" x="440" y="360">Mei</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" x="520" y="360">Jun</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" x="600" y="360">Jul</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="14" text-anchor="middle" x="680" y="360">Agu</text>
+                        
+                        <!-- Y-axis labels -->
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="12" text-anchor="end" x="70" y="85">120</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="12" text-anchor="end" x="70" y="145">90</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="12" text-anchor="end" x="70" y="205">60</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="12" text-anchor="end" x="70" y="265">30</text>
+                        <text fill="#6B7280" font-family="Inter, sans-serif" font-size="12" text-anchor="end" x="70" y="325">0</text>
+                    </svg>
+                </div>
+                
+                <div class="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-telusafe-red rounded-full"></div>
+                        <span class="text-sm font-medium text-gray-700">Jumlah Mahasiswa Konseling</span>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-3xl font-bold text-telusafe-red">95</div>
+                        <div class="text-sm text-gray-600">Mahasiswa bulan ini</div>
+                        <div class="text-sm text-green-600 mt-1">
+                            <i class="fas fa-arrow-up mr-1"></i>+12% dari bulan lalu
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Psychologist Form -->
+            <div class="card-clean p-6">
+                <h3 class="text-lg font-bold text-gray-900 mb-6">Tambah Psikolog Baru</h3>
+                
+                <form class="space-y-6" onsubmit="savePsychologist(event)">
+                    <div class="grid grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ID Psikolog</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red focus:border-transparent" id="idPsikolog" type="text" placeholder="PSY001"/>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red focus:border-transparent" id="nama" type="text" placeholder="Dr. Jane Smith, M.Psi"/>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red focus:border-transparent" id="nomorTelepon" type="text" placeholder="08123456789"/>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Spesialisasi</label>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red focus:border-transparent resize-none" id="spesialisasi" rows="3" placeholder="Psikologi Klinis, Terapi Kognitif Perilaku"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Jadwal Tersedia</label>
+                        <div class="flex space-x-3">
+                            <button class="px-4 py-2 text-sm border border-telusafe-red text-telusafe-red rounded-lg hover:bg-telusafe-red hover:text-white transition-all day-selector" type="button" onclick="toggleDay(this, 'senin')">Senin</button>
+                            <button class="px-4 py-2 text-sm border border-telusafe-red text-telusafe-red rounded-lg hover:bg-telusafe-red hover:text-white transition-all day-selector" type="button" onclick="toggleDay(this, 'selasa')">Selasa</button>
+                            <button class="px-4 py-2 text-sm border border-telusafe-red text-telusafe-red rounded-lg hover:bg-telusafe-red hover:text-white transition-all day-selector" type="button" onclick="toggleDay(this, 'rabu')">Rabu</button>
+                            <button class="px-4 py-2 text-sm border border-telusafe-red text-telusafe-red rounded-lg hover:bg-telusafe-red hover:text-white transition-all day-selector" type="button" onclick="toggleDay(this, 'kamis')">Kamis</button>
+                            <button class="px-4 py-2 text-sm border border-telusafe-red text-telusafe-red rounded-lg hover:bg-telusafe-red hover:text-white transition-all day-selector" type="button" onclick="toggleDay(this, 'jumat')">Jumat</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3">
+                        <button class="px-6 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50" type="reset" onclick="resetForm()">Reset</button>
+                        <button class="px-6 py-2 bg-telusafe-red text-white rounded-lg hover:bg-telusafe-dark-red" type="submit">Simpan</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Psychologist List -->
+            <div class="card-clean p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Daftar Psikolog</h3>
+                        <p class="text-gray-600 text-sm">Manajemen data psikolog dalam sistem</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="flex items-center space-x-2 bg-telusafe-red text-white px-4 py-2 rounded-lg hover:bg-telusafe-dark-red" onclick="bulkAction()">
+                            <i class="fas fa-tasks"></i>
+                            <span>Bulk Action</span>
+                        </button>
+                        <button class="flex items-center space-x-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50" onclick="refreshTable()">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200 text-left">
+                                <th class="pb-3 text-sm font-semibold text-gray-700">
+                                    <input type="checkbox" class="rounded" onchange="selectAll(this)">
+                                </th>
+                                <th class="pb-3 text-sm font-semibold text-gray-700">Nama</th>
+                                <th class="pb-3 text-sm font-semibold text-gray-700">Spesialisasi</th>
+                                <th class="pb-3 text-sm font-semibold text-gray-700">Jadwal</th>
+                                <th class="pb-3 text-sm font-semibold text-gray-700">Telepon</th>
+                                <th class="pb-3 text-sm font-semibold text-gray-700">Status</th>
+                                <th class="pb-3 text-sm font-semibold text-gray-700">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100 table-row">
+                                <td class="py-4">
+                                    <input type="checkbox" class="rounded">
+                                </td>
+                                <td class="py-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                                            JS
+                                        </div>
+                                        <div>
+                                            <div class="font-semibold text-gray-900">Dr. Jane Smith, M.Psi</div>
+                                            <div class="text-sm text-gray-500">Psikolog Senior</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4">
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
+                                        Psikologi Klinis
+                                    </span>
+                                </td>
+                                <td class="py-4 text-sm text-gray-600">Senin, Selasa, Rabu</td>
+                                <td class="py-4 text-sm text-gray-600">08123456789</td>
+                                <td class="py-4">
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full flex items-center w-fit">
+                                        <i class="fas fa-circle mr-1 text-xs"></i>Aktif
+                                    </span>
+                                </td>
+                                <td class="py-4">
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 p-2" onclick="viewPsychologist('PSY001')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-yellow-600 hover:text-yellow-800 p-2" onclick="editPsychologist('PSY001')">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-green-600 hover:text-green-800 p-2" onclick="manageSchedule('PSY001')">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-800 p-2" onclick="deletePsychologist('PSY001')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr class="border-b border-gray-100 table-row">
+                                <td class="py-4">
+                                    <input type="checkbox" class="rounded">
+                                </td>
+                                <td class="py-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                                            AB
+                                        </div>
+                                        <div>
+                                            <div class="font-semibold text-gray-900">Dr. Ahmad Budi, S.Psi</div>
+                                            <div class="text-sm text-gray-500">Konselor Remaja</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4">
+                                    <span class="bg-purple-100 text-purple-800 text-xs font-medium px-3 py-1 rounded-full">
+                                        Konseling Remaja
+                                    </span>
+                                </td>
+                                <td class="py-4 text-sm text-gray-600">Kamis, Jumat</td>
+                                <td class="py-4 text-sm text-gray-600">08987654321</td>
+                                <td class="py-4">
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full flex items-center w-fit">
+                                        <i class="fas fa-circle mr-1 text-xs"></i>Aktif
+                                    </span>
+                                </td>
+                                <td class="py-4">
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 p-2" onclick="viewPsychologist('PSY002')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-yellow-600 hover:text-yellow-800 p-2" onclick="editPsychologist('PSY002')">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-green-600 hover:text-green-800 p-2" onclick="manageSchedule('PSY002')">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-800 p-2" onclick="deletePsychologist('PSY002')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr class="border-b border-gray-100 table-row">
+                                <td class="py-4">
+                                    <input type="checkbox" class="rounded">
+                                </td>
+                                <td class="py-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                                            SR
+                                        </div>
+                                        <div>
+                                            <div class="font-semibold text-gray-700">Dr. Sari Rahayu, M.Psi</div>
+                                            <div class="text-sm text-gray-500">Terapis Trauma</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4">
+                                    <span class="bg-red-100 text-red-800 text-xs font-medium px-3 py-1 rounded-full">
+                                        Terapi Trauma
+                                    </span>
+                                </td>
+                                <td class="py-4 text-sm text-gray-600">Senin, Rabu, Jumat</td>
+                                <td class="py-4 text-sm text-gray-600">08555123456</td>
+                                <td class="py-4">
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-3 py-1 rounded-full flex items-center w-fit">
+                                        <i class="fas fa-pause mr-1 text-xs"></i>Cuti
+                                    </span>
+                                </td>
+                                <td class="py-4">
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 p-2" onclick="viewPsychologist('PSY003')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-400 cursor-not-allowed p-2" disabled>
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-gray-400 cursor-not-allowed p-2" disabled>
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </button>
+                                        <button class="text-green-600 hover:text-green-800 p-2" onclick="activatePsychologist('PSY003')">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="flex items-center justify-between mt-6">
+                    <div class="text-sm text-gray-600">
+                        Menampilkan 1-3 dari 10 psikolog  
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50" onclick="previousPage()">Previous</button>
+                        <button class="px-3 py-1 bg-telusafe-red text-white rounded text-sm">1</button>
+                        <button class="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50" onclick="nextPage()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed top-4 right-4 bg-white border-l-4 border-telusafe-red rounded-lg shadow-lg p-4 transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+            <span id="toast-message">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <script>
+        let selectedDays = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Counter animation
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                let current = 0;
+                const increment = target / 30;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCounter();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(counter);
+            });
+        });
+
+        function navigateTo(section) { showToast(`Navigating to ${section}...`, 'info'); }
+        function exportData() { showToast('Exporting data...', 'info'); }
+        function showDetails(type) { showToast(`Showing ${type} details...`, 'info'); }
+        function logout() { showToast('Logging out...', 'warning'); }
+
+        function toggleDay(button, day) {
+            button.classList.toggle('active');
+            if (button.classList.contains('active')) {
+                button.classList.add('bg-telusafe-red', 'text-white');
+                button.classList.remove('text-telusafe-red');
+                selectedDays.push(day);
+            } else {
+                button.classList.remove('bg-telusafe-red', 'text-white');
+                button.classList.add('text-telusafe-red');
+                selectedDays = selectedDays.filter(d => d !== day);
+            }
+        }
+
+        function resetForm() {
+            selectedDays = [];
+            document.querySelectorAll('.day-selector').forEach(btn => {
+                btn.classList.remove('active', 'bg-telusafe-red', 'text-white');
+                btn.classList.add('text-telusafe-red');
+            });
+            showToast('Form reset', 'info');
+        }
+
+        function savePsychologist(event) {
+            event.preventDefault();
+            const formData = {
+                id: document.getElementById('idPsikolog').value,
+                nama: document.getElementById('nama').value,
+                spesialisasi: document.getElementById('spesialisasi').value,
+                telepon: document.getElementById('nomorTelepon').value,
+                jadwal: selectedDays
+            };
+
+            if (!formData.id || !formData.nama || !formData.spesialisasi || !formData.telepon || selectedDays.length === 0) {
+                showToast('Please fill all fields', 'error');
+                return;
+            }
+
+            showToast('Psikolog berhasil ditambahkan!', 'success');
+            resetForm();
+            document.querySelector('form').reset();
+        }
+
+        function viewPsychologist(id) { showToast(`Viewing ${id}...`, 'info'); }
+        function editPsychologist(id) { showToast(`Editing ${id}...`, 'warning'); }
+        function manageSchedule(id) { showToast(`Managing schedule ${id}...`, 'info'); }
+        function deletePsychologist(id) { showToast(`Deleting ${id}...`, 'error'); }
+        function activatePsychologist(id) { showToast(`Activating ${id}...`, 'success'); }
+        function bulkAction() { showToast('Bulk action...', 'info'); }
+        function refreshTable() { showToast('Refreshing...', 'info'); }
+        function selectAll(checkbox) { 
+            document.querySelectorAll('tbody input[type="checkbox"]').forEach(cb => cb.checked = checkbox.checked);
+            showToast(`${checkbox.checked ? 'Selected' : 'Deselected'} all`, 'info');
+        }
+        function previousPage() { showToast('Previous page...', 'info'); }
+        function nextPage() { showToast('Next page...', 'info'); }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const icon = toast.querySelector('i');
+            
+            icon.className = 'fas mr-3';
+            toast.className = 'fixed top-4 right-4 bg-white rounded-lg shadow-lg p-4 transform transition-transform duration-300 z-50';
+            
+            switch(type) {
+                case 'success':
+                    icon.className += ' fa-check-circle text-green-500';
+                    toast.className += ' border-l-4 border-green-500';
+                    break;
+                case 'warning':
+                    icon.className += ' fa-exclamation-triangle text-yellow-500';
+                    toast.className += ' border-l-4 border-yellow-500';
+                    break;
+                case 'info':
+                    icon.className += ' fa-info-circle text-blue-500';
+                    toast.className += ' border-l-4 border-blue-500';
+                    break;
+                case 'error':
+                    icon.className += ' fa-times-circle text-red-500';
+                    toast.className += ' border-l-4 border-red-500';
+                    break;
+            }
+            
+            toastMessage.textContent = message;
+            toast.style.transform = 'translateX(0)';
+            setTimeout(() => toast.style.transform = 'translateX(100%)', 3000);
+        }
+    </script>
+</body>
+</html>

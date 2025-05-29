@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>TeluSafe - Update Laporan PPKS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'telusafe-red': '#C43B3B',
+                        'telusafe-light-red': '#F44343',
+                        'telusafe-pink': '#FEEAEA',
+                        'telusafe-dark-red': '#A63333'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'poppins': ['Poppins', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-right': 'slideRight 0.6s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                        'pulse-soft': 'pulseSoft 2s infinite',
+                        'scale-in': 'scaleIn 0.4s ease-out',
+                        'notification-pulse': 'notificationPulse 2s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideRight: {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' }
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' }
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.9)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        notificationPulse: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                            '50%': { transform: 'scale(1.2)', opacity: '0.8' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .sidebar-active {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        
+        .search-focus {
+            transition: all 0.3s ease;
+        }
+        
+        .search-focus:focus {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(196, 59, 59, 0.15);
+        }
+        
+        .notification-dot {
+            animation: notificationPulse 2s infinite;
+        }
+        
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .stagger-animation > * {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger-animation > *:nth-child(6) { animation-delay: 0.6s; }
+        
+        .form-focus {
+            transition: all 0.3s ease;
+        }
+        
+        .form-focus:focus {
+            transform: scale(1.01);
+            box-shadow: 0 4px 15px rgba(196, 59, 59, 0.1);
+        }
+        
+        .status-badge {
+            animation: pulse-soft 2s infinite;
+        }
+        
+        .evidence-upload {
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        
+        .evidence-upload:hover {
+            border-color: #C43B3B;
+            background: rgba(196, 59, 59, 0.05);
+        }
+        
+        .evidence-upload.dragover {
+            border-color: #F44343;
+            background: rgba(244, 67, 67, 0.1);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-slate-200 min-h-screen text-gray-900 font-inter">
+    <div class="flex max-w-[1440px] mx-auto rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.12)] overflow-hidden border border-gray-200 bg-white animate-scale-in">
+        <!-- Sidebar -->
+        <aside class="bg-gradient-to-b from-telusafe-red to-telusafe-dark-red w-56 flex flex-col p-6 space-y-8 text-white select-none animate-slide-right">
+            <div class="flex items-center space-x-3 group">
+                <img src="../assets/Logo.png" alt="TeluSafe Logo" class="w-8 h-8 object-contain group-hover:rotate-12 transition-transform duration-300"/>
+                <span class="font-semibold text-lg leading-none select-text">TeluSafe</span>
+            </div>
+            
+            <nav class="flex flex-col space-y-6 text-sm font-semibold stagger-animation">
+                <a class="flex items-center space-x-3 text-white font-semibold nav-item rounded-lg p-2 transition-all duration-300 hover:bg-white hover:bg-opacity-20" href="#" onclick="navigateTo('home')">
+                    <i class="fas fa-th-large text-white text-lg"></i>
+                    <span>Beranda</span>
+                </a>
+                
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-2 font-semibold text-white sidebar-active p-2">
+                        <i class="fas fa-shield-alt text-white text-base"></i>
+                        <span>PPKS</span>
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <a class="flex items-center space-x-2 font-semibold text-white nav-item rounded-lg p-2 transition-all duration-300 hover:bg-white hover:bg-opacity-20" href="#" onclick="navigateTo('bk')">
+                        <i class="fas fa-user-friends text-white text-base"></i>
+                        <span>Bimbingan Konseling</span>
+                    </a>
+                </div>
+                
+                <div class="space-y-2">
+                    <a class="flex items-center space-x-2 font-semibold text-white nav-item rounded-lg p-2 transition-all duration-300 hover:bg-white hover:bg-opacity-20" href="#" onclick="navigateTo('emosi')">
+                        <i class="fas fa-heart text-white text-base"></i>
+                        <span>Emosi Mahasiswa</span>
+                    </a>
+                </div>
+                
+                <div class="space-y-2">
+                    <a class="flex items-center space-x-2 font-semibold text-white nav-item rounded-lg p-2 transition-all duration-300 hover:bg-white hover:bg-opacity-20" href="#" onclick="navigateTo('artikel')">
+                        <i class="fas fa-newspaper text-white text-base"></i>
+                        <span>Artikel</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <button aria-label="Logout" class="mt-auto flex items-center space-x-2 text-white text-sm opacity-70 hover:opacity-100 transition-all duration-300 nav-item p-2 hover:bg-red-700 rounded-lg" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 p-6 space-y-6 animate-fade-in overflow-auto">
+            <!-- Top bar -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-3">
+                    <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center card-hover" onclick="goBack()">
+                        <i class="fas fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div class="w-12 h-12 bg-gradient-to-br from-telusafe-red to-telusafe-light-red rounded-xl flex items-center justify-center floating-animation">
+                        <i class="fas fa-edit text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-[28px] font-bold font-poppins bg-gradient-to-r from-telusafe-red to-telusafe-light-red bg-clip-text text-transparent">
+                            Update Laporan PPKS
+                        </h1>
+                        <p class="text-sm text-gray-500">Edit & Update Report Details</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-3 glass-effect rounded-full p-2 card-hover cursor-pointer" onclick="showProfile()">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-telusafe-red to-telusafe-light-red flex items-center justify-center text-white font-bold">
+                            MQ
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm font-semibold leading-none">Musfiq</p>
+                            <p class="text-xs text-gray-500 leading-none">PPKS Admin</p>
+                        </div>
+                    </div>
+                    <button aria-label="Notifications" class="relative text-xl glass-effect p-3 rounded-full card-hover" onclick="showNotifications()">
+                        <i class="fas fa-bell text-gray-600"></i>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full notification-dot"></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Update Form -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Main Form Section -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Report Information -->
+                    <section class="animate-slide-up">
+                        <div class="glass-effect rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h2 class="text-[20px] font-semibold font-poppins text-gray-800">Informasi Laporan</h2>
+                                    <p class="text-sm text-gray-500 mt-1">Detail dasar laporan PPKS</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs text-gray-500">ID:</span>
+                                    <span class="font-mono text-sm font-bold text-telusafe-red">#PPKS001</span>
+                                </div>
+                            </div>
+                            
+                            <form class="space-y-6 stagger-animation">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                            <i class="fas fa-calendar-alt mr-2 text-telusafe-red"></i>
+                                            Tanggal Kejadian
+                                        </label>
+                                        <input type="date" value="2025-05-29" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red form-focus glass-effect">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                            <i class="fas fa-user-tag mr-2 text-telusafe-red"></i>
+                                            Jenis Laporan
+                                        </label>
+                                        <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red form-focus glass-effect">
+                                            <option value="korban" selected>Korban</option>
+                                            <option value="saksi">Saksi</option>
+                                            <option value="pihak-ketiga">Pihak Ketiga</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        <i class="fas fa-map-marker-alt mr-2 text-telusafe-red"></i>
+                                        Lokasi Kejadian
+                                    </label>
+                                    <input type="text" value="Gedung Manterawu Lt.3" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red form-focus glass-effect" placeholder="Masukkan lokasi kejadian">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        <i class="fas fa-align-left mr-2 text-telusafe-red"></i>
+                                        Deskripsi Kejadian
+                                    </label>
+                                    <textarea rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red form-focus glass-effect" placeholder="Deskripsikan detail kejadian...">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac turpis rutrum, cursus lorem at, sollicitudin nisi. Donec nec urna eget urna vestibulum sagittis eget ultricies ante. Proin volutpat elementum magna vel pellentesque.</textarea>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                            <i class="fas fa-exclamation-triangle mr-2 text-telusafe-red"></i>
+                                            Prioritas
+                                        </label>
+                                        <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red form-focus glass-effect">
+                                            <option value="tinggi" selected>Tinggi</option>
+                                            <option value="sedang">Sedang</option>
+                                            <option value="rendah">Rendah</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                            <i class="fas fa-user-shield mr-2 text-telusafe-red"></i>
+                                            Petugas Penanganan
+                                        </label>
+                                        <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red form-focus glass-effect">
+                                            <option value="admin_a" selected>Admin A</option>
+                                            <option value="admin_b">Admin B</option>
+                                            <option value="admin_c">Admin C</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                    <!-- Evidence Management -->
+                    <section class="animate-slide-up">
+                        <div class="glass-effect rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+                            <h3 class="text-[18px] font-semibold font-poppins text-gray-800 mb-4">
+                                <i class="fas fa-camera mr-2 text-telusafe-red"></i>
+                                Manajemen Bukti
+                            </h3>
+                            
+                            <!-- Current Evidence -->
+                            <div class="mb-6">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-3">Bukti Saat Ini</h4>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 stagger-animation">
+                                    <div class="relative group">
+                                        <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=200&h=150&fit=crop&crop=center" alt="Evidence 1" class="w-full h-32 object-cover rounded-lg">
+                                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="text-white hover:text-blue-300 card-hover" onclick="viewEvidence(1)">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="text-white hover:text-red-300 card-hover" onclick="deleteEvidence(1)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="relative group">
+                                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=200&h=150&fit=crop&crop=center" alt="Evidence 2" class="w-full h-32 object-cover rounded-lg">
+                                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="text-white hover:text-blue-300 card-hover" onclick="viewEvidence(2)">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="text-white hover:text-red-300 card-hover" onclick="deleteEvidence(2)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Upload New Evidence -->
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-700 mb-3">Tambah Bukti Baru</h4>
+                                <div class="evidence-upload rounded-lg p-8 text-center cursor-pointer" onclick="uploadEvidence()">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                                    <p class="text-gray-600 font-medium">Klik untuk upload atau drag & drop</p>
+                                    <p class="text-sm text-gray-500 mt-2">PNG, JPG, PDF hingga 10MB</p>
+                                    <input type="file" multiple accept="image/*,.pdf" class="hidden" id="evidenceUpload">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Status & Actions Panel -->
+                <div class="lg:col-span-1 space-y-6">
+                    <!-- Current Status -->
+                    <section class="animate-slide-up">
+                        <div class="glass-effect rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+                            <h3 class="text-[18px] font-semibold font-poppins text-gray-800 mb-4">
+                                <i class="fas fa-info-circle mr-2 text-telusafe-red"></i>
+                                Status Laporan
+                            </h3>
+                            
+                            <div class="space-y-4">
+                                <div class="text-center">
+                                    <div class="status-badge bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-2">
+                                        <i class="fas fa-search mr-2"></i>
+                                        Dalam Investigasi
+                                    </div>
+                                    <p class="text-xs text-gray-500">Status saat ini</p>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Update Status</label>
+                                    <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red form-focus glass-effect" id="statusUpdate">
+                                        <option value="dilaporkan">Dilaporkan</option>
+                                        <option value="diproses">Diproses</option>
+                                        <option value="investigasi" selected>Dalam Investigasi</option>
+                                        <option value="selesai">Selesai</option>
+                                        <option value="ditutup">Ditutup</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Catatan Status</label>
+                                    <textarea rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-telusafe-red form-focus glass-effect text-sm" placeholder="Tambahkan catatan untuk perubahan status..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Report Timeline -->
+                    <section class="animate-slide-up">
+                        <div class="glass-effect rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+                            <h3 class="text-[18px] font-semibold font-poppins text-gray-800 mb-4">
+                                <i class="fas fa-history mr-2 text-telusafe-red"></i>
+                                Timeline
+                            </h3>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
+                                        <i class="fas fa-search text-blue-600 text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-800">Investigasi Dimulai</p>
+                                        <p class="text-xs text-gray-500">29 Mei 2025, 14:30</p>
+                                        <p class="text-xs text-gray-600 mt-1">Petugas Admin A ditugaskan</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mt-1">
+                                        <i class="fas fa-hourglass-half text-orange-600 text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-800">Status Diproses</p>
+                                        <p class="text-xs text-gray-500">29 Mei 2025, 10:15</p>
+                                        <p class="text-xs text-gray-600 mt-1">Laporan mulai diverifikasi</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mt-1">
+                                        <i class="fas fa-plus text-red-600 text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-800">Laporan Dibuat</p>
+                                        <p class="text-xs text-gray-500">29 Mei 2025, 09:00</p>
+                                        <p class="text-xs text-gray-600 mt-1">Laporan korban diterima</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Actions -->
+                    <section class="animate-slide-up">
+                        <div class="glass-effect rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+                            <h3 class="text-[18px] font-semibold font-poppins text-gray-800 mb-4">
+                                <i class="fas fa-bolt mr-2 text-telusafe-red"></i>
+                                Aksi Cepat
+                            </h3>
+                            
+                            <div class="space-y-3 stagger-animation">
+                                <button class="w-full text-left p-3 bg-gradient-to-r from-telusafe-red to-telusafe-light-red text-white rounded-lg card-hover text-sm font-medium" onclick="saveReport()">
+                                    <i class="fas fa-save mr-2"></i>
+                                    Simpan Perubahan
+                                </button>
+                                
+                                <button class="w-full text-left p-3 border border-blue-200 text-blue-600 hover:bg-blue-50 rounded-lg card-hover text-sm font-medium" onclick="sendNotification()">
+                                    <i class="fas fa-bell mr-2"></i>
+                                    Kirim Notifikasi
+                                </button>
+                                
+                                <button class="w-full text-left p-3 border border-green-200 text-green-600 hover:bg-green-50 rounded-lg card-hover text-sm font-medium" onclick="generateReport()">
+                                    <i class="fas fa-file-export mr-2"></i>
+                                    Generate Laporan
+                                </button>
+                                
+                                <button class="w-full text-left p-3 border border-yellow-200 text-yellow-600 hover:bg-yellow-50 rounded-lg card-hover text-sm font-medium" onclick="flagUrgent()">
+                                    <i class="fas fa-flag mr-2"></i>
+                                    Tandai Mendesak
+                                </button>
+                                
+                                <button class="w-full text-left p-3 border border-gray-200 text-gray-600 hover:bg-gray-50 rounded-lg card-hover text-sm font-medium" onclick="cancelUpdate()">
+                                    <i class="fas fa-times mr-2"></i>
+                                    Batal
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 bg-white border-l-4 border-telusafe-red rounded-lg shadow-lg p-4 transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+            <span id="toast-message">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- Evidence Modal -->
+    <div id="evidenceModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">Lihat Bukti</h3>
+                    <button class="text-gray-500 hover:text-gray-700" onclick="closeEvidenceModal()">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <img id="modalImage" src="" alt="Evidence" class="max-w-full h-auto rounded-lg">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize animations and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search keyboard shortcut
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    saveReport();
+                }
+            });
+
+            // Initialize drag & drop for evidence upload
+            const uploadArea = document.querySelector('.evidence-upload');
+            if (uploadArea) {
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('dragover');
+                });
+
+                uploadArea.addEventListener('dragleave', () => {
+                    uploadArea.classList.remove('dragover');
+                });
+
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('dragover');
+                    handleFileUpload(e.dataTransfer.files);
+                });
+            }
+        });
+
+        // Interactive functions
+        function navigateTo(section) {
+            showToast(`Navigating to ${section} section...`, 'info');
+        }
+
+        function goBack() {
+            showToast('Returning to PPKS dashboard...', 'info');
+        }
+
+        function showProfile() {
+            showToast('Opening admin profile...', 'info');
+        }
+
+        function showNotifications() {
+            showToast('Loading notifications...', 'info');
+        }
+
+        function saveReport() {
+            showToast('Menyimpan perubahan laporan...', 'success');
+        }
+
+        function uploadEvidence() {
+            document.getElementById('evidenceUpload').click();
+        }
+
+        function handleFileUpload(files) {
+            showToast(`Uploading ${files.length} file(s)...`, 'info');
+        }
+
+        function viewEvidence(id) {
+            const modal = document.getElementById('evidenceModal');
+            const modalImage = document.getElementById('modalImage');
+            
+            // Set image source based on ID (demo purposes)
+            const images = [
+                'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=400&fit=crop&crop=center',
+                'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=400&fit=crop&crop=center'
+            ];
+            
+            modalImage.src = images[id - 1] || images[0];
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeEvidenceModal() {
+            const modal = document.getElementById('evidenceModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function deleteEvidence(id) {
+            showToast(`Menghapus bukti #${id}...`, 'warning');
+        }
+
+        function sendNotification() {
+            showToast('Mengirim notifikasi terkait laporan...', 'info');
+        }
+
+        function generateReport() {
+            showToast('Generating comprehensive report...', 'info');
+        }
+
+        function flagUrgent() {
+            showToast('Menandai laporan sebagai mendesak...', 'warning');
+        }
+
+        function cancelUpdate() {
+            showToast('Membatalkan perubahan...', 'warning');
+        }
+
+        function logout() {
+            showToast('Logging out admin session...', 'warning');
+            setTimeout(() => {
+                showToast('Admin session ended. Stay safe!', 'success');
+            }, 1000);
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const icon = toast.querySelector('i');
+            
+            // Reset classes
+            icon.className = 'fas mr-3';
+            toast.className = 'fixed top-4 right-4 bg-white rounded-lg shadow-lg p-4 transform transition-transform duration-300 z-50';
+            
+            // Set icon and border color based on type
+            switch(type) {
+                case 'success':
+                    icon.className += ' fa-check-circle text-green-500';
+                    toast.className += ' border-l-4 border-green-500';
+                    break;
+                case 'warning':
+                    icon.className += ' fa-exclamation-triangle text-yellow-500';
+                    toast.className += ' border-l-4 border-yellow-500';
+                    break;
+                case 'info':
+                    icon.className += ' fa-info-circle text-blue-500';
+                    toast.className += ' border-l-4 border-blue-500';
+                    break;
+                case 'error':
+                    icon.className += ' fa-times-circle text-red-500';
+                    toast.className += ' border-l-4 border-red-500';
+                    break;
+            }
+            
+            toastMessage.textContent = message;
+            
+            // Show toast
+            toast.style.transform = 'translateX(0)';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+            }, 3000);
+        }
+
+        // File upload handling
+        document.getElementById('evidenceUpload').addEventListener('change', function(e) {
+            handleFileUpload(e.target.files);
+        });
+
+        // Add ripple effect to buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('button, .card-hover')) {
+                const ripple = document.createElement('span');
+                const rect = e.target.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                e.target.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            }
+        });
+    </script>
+</body>
+</html>
