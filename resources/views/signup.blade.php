@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>TeluSafe - Daftar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'telusafe': {
+                            50: '#FEF2F2', 100: '#FEE2E2', 200: '#FECACA', 300: '#FCA5A5',
+                            400: '#F87171', 500: '#EF4444', 600: '#DC2626', 700: '#B91C1C',
+                            800: '#991B1B', 900: '#7F1D1D', 950: '#450A0A'
+                        },
+                        'neutral': {
+                            25: '#FCFCFD', 50: '#F9FAFB', 100: '#F3F4F6', 200: '#E5E7EB',
+                            300: '#D1D5DB', 400: '#9CA3AF', 500: '#6B7280', 600: '#4B5563',
+                            700: '#374151', 800: '#1F2937', 900: '#111827', 950: '#030712'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif']
+                    },
+                    borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+                    boxShadow: {
+                        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+                        'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 30px -5px rgba(0, 0, 0, 0.05)',
+                        'strong': '0 10px 40px -10px rgba(0, 0, 0, 0.15), 0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+                        'glow': '0 0 20px rgba(239, 68, 68, 0.15)',
+                        'glow-strong': '0 0 30px rgba(239, 68, 68, 0.25)'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-down': 'slideDown 0.6s ease-out',
+                        'slide-left': 'slideLeft 0.6s ease-out',
+                        'slide-right': 'slideRight 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.5s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-soft': 'pulseSoft 2s infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'gradient-shift': 'gradientShift 3s ease-in-out infinite',
+                        'heart-beat': 'heartBeat 1.5s ease-in-out infinite',
+                        'checkmark': 'checkmark 0.3s ease-in'
+                    },
+                    keyframes: {
+                        fadeIn: { 
+                            '0%': { opacity: '0', transform: 'translateY(20px)' }, 
+                            '100%': { opacity: '1', transform: 'translateY(0)' } 
+                        },
+                        slideUp: { 
+                            '0%': { transform: 'translateY(30px)', opacity: '0' }, 
+                            '100%': { transform: 'translateY(0)', opacity: '1' } 
+                        },
+                        slideDown: { 
+                            '0%': { transform: 'translateY(-30px)', opacity: '0' }, 
+                            '100%': { transform: 'translateY(0)', opacity: '1' } 
+                        },
+                        slideLeft: { 
+                            '0%': { transform: 'translateX(30px)', opacity: '0' }, 
+                            '100%': { transform: 'translateX(0)', opacity: '1' } 
+                        },
+                        slideRight: { 
+                            '0%': { transform: 'translateX(-30px)', opacity: '0' }, 
+                            '100%': { transform: 'translateX(0)', opacity: '1' } 
+                        },
+                        scaleIn: { 
+                            '0%': { transform: 'scale(0.9)', opacity: '0' }, 
+                            '100%': { transform: 'scale(1)', opacity: '1' } 
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-15px)' }
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                            '50%': { transform: 'scale(1.05)', opacity: '0.8' }
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        },
+                        gradientShift: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        },
+                        heartBeat: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.1)' }
+                        },
+                        checkmark: {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .hover-lift {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+        
+        .input-focus:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -5px rgba(239, 68, 68, 0.2);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #DC2626, #EF4444, #F87171);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        .welcome-banner {
+            background: linear-gradient(135deg, #DC2626, #EF4444, #F87171);
+            background-size: 400% 400%;
+            animation: gradientShift 5s ease-in-out infinite;
+        }
+        
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .stagger-animation > * {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger-animation > *:nth-child(6) { animation-delay: 0.6s; }
+
+        .input-valid {
+            border-color: #34D399 !important;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.2) !important;
+        }
+
+        .input-invalid {
+            border-color: #EF4444 !important;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.2) !important;
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111827;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .card-hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        .card-visible {
+            display: block;
+            animation: slideRight 0.6s ease-out forwards;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #D1D5DB;
+            transition: background 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #EF4444;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-neutral-50 via-white to-telusafe-50 min-h-screen flex items-center justify-center p-4 sm:p-6">
+    <!-- Background decorations -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-telusafe-100 rounded-full opacity-20 animate-float"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-telusafe-200 rounded-full opacity-15 animate-bounce-gentle"></div>
+        <div class="absolute top-1/2 right-1/6 w-64 h-64 bg-gradient-to-br from-telusafe-100 to-telusafe-200 rounded-full opacity-10 animate-pulse-soft"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="w-full max-w-md relative z-10 animate-scale-in">
+        <!-- Logo and Header -->
+        <div class="text-center mb-8 animate-slide-down">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-telusafe-500 to-telusafe-600 rounded-4xl mb-6 shadow-glow-strong animate-bounce-gentle">
+                <img src="/assets/webadmin/Logo.png" alt="TeluSafe Logo" class="w-8 h-8 object-contain"/>
+            </div>
+            <h1 class="text-4xl font-display font-bold gradient-text mb-2">TeluSafe</h1>
+            <p class="text-neutral-600 text-lg">Portal Keamanan Telkom University</p>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="flex justify-center space-x-2 mb-6">
+            <div class="progress-dot active" id="dot-1"></div>
+            <div class="progress-dot" id="dot-2"></div>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div class="glass-effect rounded-4xl shadow-strong p-8 border-2 border-white/50 hover-lift">
+            <!-- Card 1: Personal Information -->
+            <div id="card-1" class="stagger-animation space-y-6 card-visible">
+                <div class="text-center">
+                    <h2 class="text-2xl font-display font-bold text-neutral-800 mb-2">Informasi Pribadi</h2>
+                    <p class="text-neutral-600">Langkah 1 dari 2</p>
+                </div>
+
+                <!-- Username SSO -->
+                <div class="space-y-2">
+                    <label for="usernameSSO" class="block text-sm font-semibold text-neutral-700">
+                        <i class="fas fa-user text-telusafe-500 mr-2"></i>
+                        Username SSO
+                    </label>
+                    <input 
+                        type="text" 
+                        id="usernameSSO" 
+                        name="usernameSSO" 
+                        required
+                        aria-label="Username SSO"
+                        class="w-full px-4 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:bg-white focus:border-telusafe-400 focus:ring-4 focus:ring-telusafe-100 outline-none transition-all duration-300 input-focus placeholder-neutral-400 hover:shadow-glow"
+                        placeholder="Masukkan username SSO Anda"
+                    />
+                    <p class="text-xs text-neutral-500 hidden" id="usernameSSO-error">Username harus diisi.</p>
+                </div>
+
+                <!-- Name -->
+                <div class="space-y-2">
+                    <label for="name" class="block text-sm font-semibold text-neutral-700">
+                        <i class="fas fa-user-circle text-telusafe-500 mr-2"></i>
+                        Nama Lengkap
+                    </label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        required
+                        aria-label="Nama Lengkap"
+                        class="w-full px-4 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:bg-white focus:border-telusafe-400 focus:ring-4 focus:ring-telusafe-100 outline-none transition-all duration-300 input-focus placeholder-neutral-400 hover:shadow-glow"
+                        placeholder="Masukkan nama lengkap Anda"
+                    />
+                    <p class="text-xs text-neutral-500 hidden" id="name-error">Nama harus diisi.</p>
+                </div>
+
+                <!-- Gmail -->
+                <div class="space-y-2">
+                    <label for="gmail" class="block text-sm font-semibold text-neutral-700">
+                        <i class="fas fa-envelope text-telusafe-500 mr-2"></i>
+                        Gmail
+                    </label>
+                    <input 
+                        type="email" 
+                        id="gmail" 
+                        name="gmail" 
+                        required
+                        aria-label="Gmail"
+                        class="w-full px-4 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:bg-white focus:border-telusafe-400 focus:ring-4 focus:ring-telusafe-100 outline-none transition-all duration-300 input-focus placeholder-neutral-400 hover:shadow-glow"
+                        placeholder="nama@gmail.com"
+                    />
+                    <p class="text-xs text-neutral-500 hidden" id="gmail-error">Gmail harus menggunakan domain @gmail.com.</p>
+                </div>
+
+                <!-- Next Button -->
+                <button 
+                    type="button" 
+                    onclick="goToCard2()"
+                    class="w-full bg-telusafe-500 text-white font-semibold py-4 px-6 rounded-2xl shadow-medium hover:shadow-glow-strong transition-all duration-300 transform hover:scale-105 hover:shadow-strong flex items-center justify-center space-x-2 text-lg"
+                    aria-label="Lanjut ke langkah berikutnya"
+                >
+                    <span>Lanjut</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Card 2: Account Details -->
+            <div id="card-2" class="stagger-animation space-y-6 card-hidden">
+                <div class="text-center">
+                    <h2 class="text-2xl font-display font-bold text-neutral-800 mb-2">Detail Akun</h2>
+                    <p class="text-neutral-600">Langkah 2 dari 2</p>
+                </div>
+
+                <!-- Password -->
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-semibold text-neutral-700">
+                        <i class="fas fa-lock text-telusafe-500 mr-2"></i>
+                        Kata Sandi
+                        <span class="tooltip" data-tooltip="Minimal 8 karakter, termasuk huruf dan angka"><i class="fas fa-info-circle text-neutral-400 ml-1"></i></span>
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            required
+                            aria-label="Kata Sandi"
+                            class="w-full px-4 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:bg-white focus:border-telusafe-400 focus:ring-4 focus:ring-telusafe-100 outline-none transition-all duration-300 input-focus placeholder-neutral-400 hover:shadow-glow pr-12"
+                            placeholder="Masukkan kata sandi Anda"
+                        />
+                        <button 
+                            type="button" 
+                            onclick="togglePassword('password')" 
+                            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-telusafe-500 transition-colors duration-200"
+                            aria-label="Toggle visibilitas kata sandi"
+                        >
+                            <i class="fas fa-eye text-sm" id="password-toggle"></i>
+                        </button>
+                    </div>
+                    <p class="text-xs text-neutral-500 hidden" id="password-error">Kata sandi harus minimal 8 karakter dengan huruf dan angka.</p>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="space-y-2">
+                    <label for="confirmPassword" class="block text-sm font-semibold text-neutral-700">
+                        <i class="fas fa-lock text-telusafe-500 mr-2"></i>
+                        Konfirmasi Kata Sandi
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            name="confirmPassword" 
+                            required
+                            aria-label="Konfirmasi Kata Sandi"
+                            class="w-full px-4 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:bg-white focus:border-telusafe-400 focus:ring-4 focus:ring-telusafe-100 outline-none transition-all duration-300 input-focus placeholder-neutral-400 hover:shadow-glow pr-12"
+                            placeholder="Konfirmasi kata sandi Anda"
+                        />
+                        <button 
+                            type="button" 
+                            onclick="togglePassword('confirmPassword')" 
+                            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-telusafe-500 transition-colors duration-200"
+                            aria-label="Toggle visibilitas konfirmasi kata sandi"
+                        >
+                            <i class="fas fa-eye text-sm" id="confirmPassword-toggle"></i>
+                        </button>
+                    </div>
+                    <p class="text-xs text-neutral-500 hidden" id="confirmPassword-error">Kata sandi tidak cocok.</p>
+                </div>
+
+                <!-- NIK -->
+                <div class="space-y-2">
+                    <label for="nik" class="block text-sm font-semibold text-neutral-700">
+                    <i class="fas fa-id-card text-telusafe-500 mr-2"></i>
+                    Nomor Induk Kependudukan (NIK)
+                    </label>
+                    <input
+                        type="text"
+                        id="nik"
+                        name="nik"
+                        required
+                        aria-label="Nomor Induk Kependudukan"
+                        placeholder="Masukkan 16 digit NIK"
+                        pattern="\d{16}"
+                        maxlength="16"
+                        class="w-full px-4 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:bg-white focus:border-telusafe-400 focus:ring-4 focus:ring-telusafe-100 outline-none transition-all duration-300 input-focus placeholder-neutral-400 hover:shadow-glow"
+                    />
+                    <p class="text-xs text-neutral-500 hidden" id="nik-error">NIK harus 16 digit angka.</p>
+                </div>
+
+                <!-- Nomer Telepon -->
+                <div class="space-y-2">
+                    <label for="phone" class="block text-sm font-semibold text-neutral-700">
+                    <i class="fas fa-phone text-telusafe-500 mr-2"></i>
+                    Nomor Telepon
+                    </label>
+                    <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    required
+                    aria-label="Nomor Telepon"
+                    placeholder="Masukkan nomor telepon (min 10, maks 14 digit)"
+                    pattern="[0-9]{10,14}"
+                    maxlength="14"
+                    class="w-full px-4 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:bg-white focus:border-telusafe-400 focus:ring-4 focus:ring-telusafe-100 outline-none transition-all duration-300 input-focus placeholder-neutral-400 hover:shadow-glow"
+                    />
+                    <p class="text-xs text-neutral-500 hidden" id="phone-error">Nomor telepon harus antara 10 dan 14 digit.</p>
+                </div>
+
+                <!-- Status -->
+                <div class="space-y-2">
+                    <label for="status" class="block text-sm font-semibold text-neutral-700">
+                        <i class="fas fa-user-graduate text-telusafe-500 mr-2"></i>
+                        Status
+                    </label>
+                    <select 
+                        id="status" 
+                        name="status" 
+                        required
+                        aria-label="Status"
+                        class="w-full px-4 py-3 bg-white/70 border border-neutral-200 rounded-2xl focus:bg-white focus:border-telusafe-400 focus:ring-4 focus:ring-telusafe-100 outline-none transition-all duration-300 input-focus placeholder-neutral-400 hover:shadow-glow"
+                    >
+                        <option value="" disabled selected>Pilih status</option>
+                        <option value="mahasiswa">Mahasiswa</option>
+                        <option value="karyawan-dosen">Karyawan/Dosen</option>
+                        <option value="psikolog">Psikolog</option>
+                    </select>
+                    <p class="text-xs text-neutral-500 hidden" id="status-error">Status harus dipilih.</p>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex space-x-4">
+                    <button 
+                        type="button" 
+                        onclick="goToCard1()"
+                        class="w-1/2 bg-neutral-200 text-neutral-700 font-semibold py-4 px-6 rounded-2xl shadow-medium hover:shadow-glow transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 text-lg"
+                        aria-label="Kembali ke langkah sebelumnya"
+                    >
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Kembali</span>
+                    </button>
+                    <button 
+                        type="button" 
+                        onclick="handleSignUp()"
+                        class="w-1/2 welcome-banner text-white font-semibold py-4 px-6 rounded-2xl shadow-medium hover:shadow-glow-strong transition-all duration-300 transform hover:scale-105 hover:shadow-strong flex items-center justify-center space-x-2 text-lg"
+                        id="signupBtn"
+                        aria-label="Daftar Akun"
+                    >
+                        <span id="signupText">Daftar</span>
+                        <i class="fas fa-user-plus" id="signupIcon"></i>
+                        <i class="fas fa-spinner loading-spinner hidden" id="loadingIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-neutral-200"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-4 bg-white/80 text-neutral-500">atau</span>
+            </div>
+        </div>
+
+        <!-- Social Sign Up Options -->
+        <div class="space-y-3">
+            <button 
+                type="button" 
+                onclick="signupWithGoogle()"
+                class="w-full bg-white border border-neutral-200 text-neutral-700 font-medium py-4 px-6 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-3 hover-lift text-base"
+                aria-label="Daftar dengan Google"
+            >
+                <svg class="w-6 h-6" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                <span>Daftar dengan Google</span>
+            </button>
+        </div>
+
+        <!-- Login Link -->
+        <div class="text-center pt-6 border-t border-neutral-200">
+            <p class="text-neutral-600">
+                Sudah punya akun?</p>
+                <a href="#" onclick="goToLogin()" class="text-telusafe-500 hover:text-telusafe-600 font-semibold transition-colors hover:underline" aria-label="Masuk ke akun">
+                    <p>Masuk sekarang</p>
+                </a>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 text-sm text-neutral-500 animate-fade-in">
+            <p>© 2025 TeluSafe - Telkom University. Semua hak dilindungi.</p>
+            <div class="flex items-center justify-center space-x-4 mt-2">
+                <a href="#" class="hover:text-telusafe-500 transition-colors">Bantuan</a>
+                <span>•</span>
+                <a href="#" class="hover:text-telusafe-500 transition-colors">Kebijakan Privasi</a>
+                <span>•</span>
+                <a href="#" class="hover:text-telusafe-500 transition-colors">Syarat & Ketentuan</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 glass-effect border-l-4 border-telusafe-500 rounded-lg shadow-strong p-4 transform translate-x-full transition-all duration-500 z-50 max-w-sm">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-3 animate-checkmark" id="toast-icon"></i>
+            <div>
+                <p class="font-semibold text-sm" id="toast-title">Berhasil!</p>
+                <p class="text-xs text-neutral-600" id="toast-message">Pendaftaran berhasil dilakukan!</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script src="js/configurasi-firebase.js"></script>
+    <script>
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const userData = sessionStorage.getItem('googleUser');
+            console.log('Data dari sessionStorage:', userData);
+            if (userData) {
+                const user = JSON.parse(userData);
+                console.log('Data user parsed:', user);  // Log objek user
+                document.getElementById('usernameSSO').value = user.name || '';
+                document.getElementById('gmail').value = user.email || '';
+            }
+        document.addEventListener('DOMContentLoaded', () => {
+            const signupBtn = document.getElementById('signupBtn');
+            signupBtn.addEventListener('click', handleSignUp);
+        });
+        });
+
+    const database = firebase.database();
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeToast();
+            addInputAnimations();
+            addInputValidation();
+            document.getElementById('usernameSSO').focus(); // Auto-focus first field
+        });
+
+        // Toggle password visibility
+        function togglePassword(fieldId) {
+            const input = document.getElementById(fieldId);
+            const toggleIcon = document.getElementById(`${fieldId}-toggle`);
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                toggleIcon.className = 'fas fa-eye-slash text-sm';
+            } else {
+                input.type = 'password';
+                toggleIcon.className = 'fas fa-eye text-sm';
+            }
+        }
+
+        // Navigate to Card 2
+        function goToCard2() {
+            if (!validateCard1()) return;
+            document.getElementById('card-1').classList.remove('card-visible');
+            document.getElementById('card-1').classList.add('card-hidden');
+            document.getElementById('card-2').classList.remove('card-hidden');
+            document.getElementById('card-2').classList.add('card-visible');
+            document.getElementById('dot-1').classList.remove('active');
+            document.getElementById('dot-2').classList.add('active');
+            document.getElementById('password').focus();
+        }
+
+        // Navigate to Card 1
+        function goToCard1() {
+            document.getElementById('card-2').classList.remove('card-visible');
+            document.getElementById('card-2').classList.add('card-hidden');
+            document.getElementById('card-1').classList.remove('card-hidden');
+            document.getElementById('card-1').classList.add('card-visible');
+            document.getElementById('dot-2').classList.remove('active');
+            document.getElementById('dot-1').classList.add('active');
+            document.getElementById('usernameSSO').focus();
+        }
+
+        // Handle sign-up form submission
+        async function handleSignUp() {
+            console.log("handleSignUp triggered");
+
+            const signupBtn = document.getElementById('signupBtn');
+            const signupText = document.getElementById('signupText');
+            const signupIcon = document.getElementById('signupIcon');
+            const loadingIcon = document.getElementById('loadingIcon');
+
+            const email = document.getElementById('gmail').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const username = document.getElementById('usernameSSO').value.trim();
+            const fullName = document.getElementById('name').value.trim();
+            const nik = document.getElementById('nik').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const status = document.getElementById('status').value;
+
+    // Tampilkan loading
+            signupText.textContent = 'Memproses...';
+            signupIcon.classList.add('hidden');
+            loadingIcon.classList.remove('hidden');
+            signupBtn.disabled = true;
+
+            try {
+      // Buat akun baru dengan Firebase Authentication
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                const uid = user.uid;
+
+      // Simpan data tambahan ke Realtime Database
+                const userData = {
+                    username: username,
+                    nama_lengkap: fullName,
+                    email: email,
+                    nik: nik,
+                    phone: phone,
+                    uid: uid,
+                    status: status,
+                    createdAt: new Date().toISOString()
+                };
+
+                await database.ref('users/' + uid).set(userData);
+
+                showToast('Pendaftaran Berhasil!', 'Akun Anda telah berhasil dibuat.', 'success');
+
+                setTimeout(() => {
+                    showToast('Mengalihkan...', 'Membuka halaman masuk...', 'info');
+                    window.location.href = '/login';
+                }, 2000);
+
+                } catch (error) {
+                    console.error("Error during sign up:", error);
+                    let errorMessage = 'Terjadi kesalahan saat pendaftaran.';
+                    if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = 'Email ini sudah terdaftar. Silakan gunakan email lain atau masuk.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'Format email tidak valid.';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = 'Password terlalu lemah (minimal 6 karakter).';
+                }
+                    showToast('Pendaftaran Gagal', errorMessage, 'error');
+            } finally {
+                signupText.textContent = 'Daftar';
+                signupIcon.classList.remove('hidden');
+                loadingIcon.classList.add('hidden');
+                signupBtn.disabled = false;
+            }
+        }
+        
+        // Validate Card 1 inputs
+        function validateCard1() {
+            let isValid = true;
+            const fields = [
+                { id: 'usernameSSO', errorId: 'usernameSSO-error', validate: value => value.trim().length > 0, error: 'Username harus diisi.' },
+                { id: 'name', errorId: 'name-error', validate: value => value.trim().length > 0, error: 'Nama harus diisi.' },
+                { id: 'gmail', errorId: 'gmail-error', validate: value => /^[\w-\.]+@gmail\.com$/.test(value), error: 'Gmail harus menggunakan @gmail.com.' }
+            ];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+                const value = input.value;
+
+                if (!field.validate(value)) {
+                    isValid = false;
+                    input.classList.remove('input-valid');
+                    input.classList.add('input-invalid');
+                    errorElement.textContent = field.error;
+                    errorElement.classList.remove('hidden');
+                    showToast('Validasi Gagal', field.error, 'error');
+                } else {
+                    input.classList.remove('input-invalid');
+                    input.classList.add('input-valid');
+                    errorElement.classList.add('hidden');
+                }
+            });
+
+            return isValid;
+        }
+
+        // Validate Card 2 inputs
+        function validateCard2() {
+            let isValid = true;
+            const fields = [
+                { id: 'password', errorId: 'password-error', validate: value => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value), error: 'Kata sandi harus minimal 8 karakter dengan huruf dan angka.' },
+                { id: 'confirmPassword', errorId: 'confirmPassword-error', validate: value => value === document.getElementById('password').value, error: 'Kata sandi tidak cocok.' },
+                { id: 'nik', errorId: 'nik-error', validate: value => /^\d{16}$/.test(value), error: 'NIK harus 16 digit angka.'},
+                { id: 'phone', errorId: 'phone-error', validate: value => /^\d{10,14}$/.test(value), error: 'Nomor telepon harus antara 10 dan 14 digit.'},
+                { id: 'status', errorId: 'status-error', validate: value => value !== '', error: 'Status harus dipilih.' }
+            ];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+                const value = input.value;
+
+                if (!field.validate(value)) {
+                    isValid = false;
+                    input.classList.remove('input-valid');
+                    input.classList.add('input-invalid');
+                    errorElement.textContent = field.error;
+                    errorElement.classList.remove('hidden');
+                    showToast('Validasi Gagal', field.error, 'error');
+                } else {
+                    input.classList.remove('input-invalid');
+                    input.classList.add('input-valid');
+                    errorElement.classList.add('hidden');
+                }
+            });
+
+            return isValid;
+        }
+
+        // Real-time input validation
+        function addInputValidation() {
+            const fields = [
+                { id: 'usernameSSO', validate: value => value.trim().length > 0, errorId: 'usernameSSO-error', error: 'Username harus diisi.' },
+                { id: 'name', validate: value => value.trim().length > 0, errorId: 'name-error', error: 'Nama harus diisi.' },
+                { id: 'gmail', validate: value => /^[\w-\.]+@gmail\.com$/.test(value), errorId: 'gmail-error', error: 'Gmail harus menggunakan @gmail.com.' },
+                { id: 'password', validate: value => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value), errorId: 'password-error', error: 'Kata sandi harus minimal 8 karakter dengan huruf dan angka.' },
+                { id: 'confirmPassword', validate: value => value === document.getElementById('password').value, errorId: 'confirmPassword-error', error: 'Kata sandi tidak cocok.' },
+                { id: 'nik', validate: value => /^\d{16}$/.test(value), errorId: 'nik-error', error: 'NIK harus 16 digit angka.'},
+                { id: 'phone', validate: value => /^\d{10,14}$/.test(value), errorId: 'phone-error', error: 'Nomor telepon harus antara 10 dan 14 digit.' },
+                { id: 'status', validate: value => value !== '', errorId: 'status-error', error: 'Status harus dipilih.' }
+            ];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                input.addEventListener('input', () => {
+                    const errorElement = document.getElementById(field.errorId);
+                    if (field.validate(input.value)) {
+                        input.classList.remove('input-invalid');
+                        input.classList.add('input-valid');
+                        errorElement.classList.add('hidden');
+                    } else {
+                        input.classList.remove('input-valid');
+                        input.classList.add('input-invalid');
+                        errorElement.textContent = field.error;
+                        errorElement.classList.remove('hidden');
+                    }
+                });
+            });
+        }
+
+        // Social sign-up functions
+        function signupWithGoogle() {
+            showToast('Google Sign Up', 'Membuka jendela pendaftaran Google...', 'info');
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            .then(() => {
+                return firebase.auth().signInWithPopup(provider);
+            })
+            .then((result) => {
+                const user = result.user;
+                console.log('User signed up with Google:', user);
+
+            // Cek apakah user sudah ada di database realtime (misal di path users/uid)
+                const userRef = firebase.database().ref('users/' + user.uid);
+                userRef.once('value', snapshot => {
+                    if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    sessionStorage.setItem('uid', user.uid);
+                    showToast('Anda sudah terdaftar!', `Selamat datang kembali, ${user.displayName || user.email}!`, 'success');
+
+        // Redirect sesuai role
+                    setTimeout(() => {
+                    showToast('Mengalihkan...', 'Memproses halaman Anda...', 'info');
+
+                    const role = userData.status || '';
+
+                            if (role === 'psikolog') {
+                                window.location.href = '/halaman';
+                            } else if (role === 'karyawan/dosen') {
+                                window.location.href = '/beranda';
+                            } else if (role === 'mahasiswa') {
+                                window.location.href = '/dashboard';
+                            } else {
+                // Default redirect kalau role tidak dikenal
+                                window.location.href = '/dashboard';
+                            }
+                        }, 1500);
+                    } else {
+                    // User belum ada, simpan data Google ke sessionStorage lalu ke signup untuk lengkapi data
+                        sessionStorage.setItem('googleUser', JSON.stringify({
+                            uid: user.uid,
+                            name: user.displayName,
+                            email: user.email,
+                        }));
+                        showToast('Data kurang lengkap', 'Silakan lengkapi data Anda terlebih dahulu.', 'info');
+                        setTimeout(() => {
+                            window.location.href = `/signup`;
+                        }, 1500);
+                    }
+                });
+            })
+            .catch((error) => {
+                console.error('Google Sign Up gagal:', error);
+                let errorMessage = 'Terjadi kesalahan saat mendaftar.';
+                if (error.code === 'auth/popup-closed-by-user') {
+                    errorMessage = 'Jendela pendaftaran ditutup.';
+                } else if (error.code === 'auth/unauthorized-domain') {
+                    errorMessage = 'Domain ini tidak diizinkan untuk operasi OAuth Anda. Mohon periksa konsol Firebase.';
+                } else {
+                    errorMessage = error.message;
+                }
+                showToast('Pendaftaran Gagal', `Daftar Google gagal: ${errorMessage}`, 'error');
+            });
+        }
+
+
+        // Go to login page
+        function goToLogin() {
+            showToast('Masuk Akun', 'Membuka halaman masuk...', 'info');
+            window.location.href = '/login';
+            // In a real application, navigate to login page
+        }
+
+        // Toast notification system
+        function initializeToast() {
+            window.showToast = function(title, message, type = 'success') {
+                const toast = document.getElementById('toast');
+                const toastTitle = document.getElementById('toast-title');
+                const toastMessage = document.getElementById('toast-message');
+                const toastIcon = document.getElementById('toast-icon');
+                
+                // Reset classes
+                toastIcon.className = 'fas mr-3';
+                toast.className = 'fixed top-4 right-4 glass-effect rounded-lg shadow-strong p-4 transform transition-all duration-500 z-50 max-w-sm';
+                
+                // Set content and styling based on type
+                switch(type) {
+                    case 'success':
+                        toastIcon.className += ' fa-check-circle text-green-500 animate-checkmark';
+                        toast.className += ' border-l-4 border-green-500';
+                        break;
+                    case 'warning':
+                        toastIcon.className += ' fa-exclamation-triangle text-yellow-500';
+                        toast.className += ' border-l-4 border-yellow-500';
+                        break;
+                    case 'info':
+                        toastIcon.className += ' fa-info-circle text-blue-500';
+                        toast.className += ' border-l-4 border-blue-500';
+                        break;
+                    case 'error':
+                        toastIcon.className += ' fa-times-circle text-red-500';
+                        toast.className += ' border-l-4 border-red-500';
+                        break;
+                }
+                
+                toastTitle.textContent = title;
+                toastMessage.textContent = message;
+                
+                // Show toast
+                toast.style.transform = 'translateX(0)';
+                
+                // Hide after 4 seconds
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(100%)';
+                }, 4000);
+            };
+        }
+
+        // Add input animations
+        function addInputAnimations() {
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
