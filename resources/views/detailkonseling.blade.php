@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeluSafe Dashboard - Detail Konseling</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #F9FAFB;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .page-header {
+      background: #FFFFFF;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .telusafe-main-logo { height: 40px; }
+    .profile { display: flex; align-items: center; gap: 10px; }
+    .profile img { border-radius: 50%; width: 40px; height: 40px; object-fit: cover; }
+    .profile-info strong { font-size: 14px; color: #1F2937; }
+    .profile-info small { font-size: 12px; color: #6B7280; }
+
+    /* Kontainer untuk Sidebar dan Area Utama */
+    .page-content { display: flex; flex: 1; }
+
+    .sidebar {
+      background: #B40000; color: white; width: 240px; padding: 25px 20px;
+      display: flex; flex-direction: column; gap: 30px; 
+      height: calc(100vh - 70px); position: sticky; top: 70px;
+    }
+    .sidebar nav a {
+      color: white; text-decoration: none; display: flex; align-items: center;
+      font-size: 15px; padding: 10px 15px; margin-bottom: 10px;
+      border-radius: 8px; transition: background-color 0.2s ease; width: 100%;
+    }
+    .sidebar nav a .menu-icon { width: 20px; height: 20px; flex-shrink: 0; }
+    .sidebar nav > a { gap: 12px; }
+    .sidebar nav .menu-item.has-submenu > .menu-link { justify-content: space-between; cursor: pointer; }
+    .menu-link-main-content { display: flex; align-items: center; gap: 12px; }
+    .sidebar nav .menu-link .arrow { font-size: 12px; transition: transform 0.3s ease; margin-left: 5px; }
+    .sidebar nav .submenu .submenu-item { font-size: 14px; padding: 8px 15px 8px 10px; gap: 12px; }
+    .sidebar nav .submenu { display: none; padding-left: 20px; margin-top: 5px; }
+    .sidebar nav .menu-item.submenu-open .submenu { display: block; }
+    .sidebar nav .menu-item.submenu-open .menu-link .arrow { transform: rotate(180deg); }
+    .sidebar nav a:hover { background-color: rgba(255, 255, 255, 0.1); }
+    .sidebar nav a.active { background-color: rgba(255, 255, 255, 0.15); font-weight: 600; }
+    .sidebar nav .menu-item.submenu-open .menu-link.parent-active { background-color: rgba(255,255,255,0.1); font-weight: 500; }
+    .logout {
+      margin-top: auto; color: white; background: transparent; border: none;
+      font-size: 15px; cursor: pointer; display: flex; align-items: center;
+      gap: 12px; padding: 10px 15px; border-radius: 8px; transition: background-color 0.2s ease;
+    }
+    .logout:hover { background-color: rgba(255, 255, 255, 0.1); }
+    .logout img { width: 20px; height: 20px; }
+
+    .main-area-wrapper { flex: 1; display: flex; padding: 25px; gap: 25px; overflow-y: auto; }
+    .main { flex: 3; display: flex; flex-direction: column; gap: 25px; }
+    .main-header { display: flex; justify-content: space-between; align-items: center; }
+    .search {
+      width: 100%; padding: 12px 20px; border-radius: 25px;
+      border: 1px solid #E5E7EB; font-size: 14px; background-color: #FFFFFF;
+    }
+    .search:focus { outline: none; border-color: #B40000; box-shadow: 0 0 0 2px rgba(180, 0, 0, 0.2); }
+
+    .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+    
+    .detail-konseling-card { padding: 25px 30px; }
+    .detail-konseling-card h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #1F2937;
+      margin-bottom: 25px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+    .readonly-info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: #4B5563;
+      margin-bottom: 12px;
+    }
+    .readonly-info-item .icon {
+      color: #6B7280;
+      font-size: 16px;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid #D1D5DB;
+      border-radius: 6px;
+      background-color: #FFFFFF;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #B40000;
+      box-shadow: 0 0 0 2px rgba(180, 0, 0, 0.15);
+    }
+    textarea.form-control {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .readonly-text {
+      font-size: 15px;
+      color: #4B5563;
+      line-height: 1.6;
+      padding: 10px 0;
+    }
+    .readonly-text ul {
+      list-style-position: outside;
+      padding-left: 20px;
+      margin: 0;
+    }
+    .readonly-text ul li {
+      margin-bottom: 4px;
+    }
+
+    .form-actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: flex-end; 
+      gap: 10px;
+    }
+    .btn {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-edit {
+      background-color: #F3F4F6; 
+      color: #374151;
+      border: 1px solid #D1D5DB;
+    }
+    .btn-edit:hover {
+      background-color: #E5E7EB;
+    }
+    .btn-simpan {
+      background-color: #B40000; /* Merah Telkom */
+      color: white;
+    }
+    .btn-simpan:hover {
+      background-color: #990000; /* Merah lebih gelap */
+    }
+
+    /* News Section (Sama seperti sebelumnya) */
+    .news { background: white; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px; width: 280px; height: fit-content; box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+    .news h4 { font-size: 16px; font-weight: 600; color: #1F2937; margin-bottom: 5px; }
+    .news img.berita-thumbnail { border-radius: 8px; width: 100%; height: auto; object-fit: cover; }
+    .news p strong { font-size: 14px; color: #1F2937; display: block; margin-bottom: 2px; }
+    .news p { font-size: 12px; color: #6B7280; }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .main-area-wrapper { flex-direction: column; }
+      .news { width: 100%; }
+    }
+    @media (max-width: 768px) {
+      .page-header { padding: 15px; }
+      .telusafe-main-logo { height: 30px; }
+      .profile-info strong { display: none; }
+      .page-content { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: static; flex-direction: row; overflow-x: auto; align-items: center; padding: 10px; gap: 10px; }
+      .sidebar nav { display: flex; gap: 5px; flex-shrink: 0; }
+      .sidebar nav .menu-item, .sidebar nav > a { margin-bottom: 0; }
+      .sidebar nav a { padding: 8px 10px; font-size: 13px; margin-bottom: 0; }
+      .sidebar nav a .menu-icon { width: 18px; height: 18px; }
+      .sidebar nav .submenu { position: absolute; background-color: #B40000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 0 0 8px 8px; z-index: 100; margin-top: 0; padding-left: 0; min-width: 150px; }
+      .sidebar nav .submenu .submenu-item { padding: 10px 15px; }
+      .sidebar .logout { margin-top: 0; margin-left: auto; padding: 8px 10px; }
+      .main-area-wrapper { padding: 15px; gap: 15px; }
+      .greeting .greeting-content { flex-direction: column; align-items: flex-start; gap:15px;}
+      .greeting img.avatar { align-self: center; }
+      .detail-konseling-card h2 { font-size: 20px; margin-bottom: 20px; }
+      .form-actions { flex-direction: column; gap:10px;}
+      .form-actions .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <img src="assets/webpsikolog/Logo.png" alt="TeluSafe Logo" class="telusafe-main-logo">
+    <div class="profile">
+      <img src="assets/webpsikolog/profil.png" alt="Profile">
+      <div class="profile-info">
+        <strong id="nama-header">Shinta</strong>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-content">
+    <aside class="sidebar">
+      <nav>
+        <a href="/halaman"><img src="assets/webpsikolog/Beranda.png" alt="Beranda Icon" class="menu-icon"> Beranda</a>
+        <div class="menu-item has-submenu">
+          <a href="#" class="menu-link bk-link active"> 
+            <span class="menu-link-main-content">
+              <img src="assets/webpsikolog/BK.png" alt="BK Icon" class="menu-icon"> BK
+            </span>
+            <span class="arrow">&#9662;</span>
+          </a>
+          <div class="submenu">
+            <a href="/caripasien" class="submenu-item"> 
+              <img src="assets/webpsikolog/cariPasien.png" alt="Cari Pasien Icon" class="menu-icon"> Cari Pasien
+            </a>
+          </div>
+        </div>
+        <a href="/jadwalpsikolog"><img src="assets/webpsikolog/Jadwal.png" alt="Jadwal Icon" class="menu-icon"> Jadwal</a>
+      </nav>
+      <button class="logout"><img src="assets/webpsikolog/logout.png" alt="Logout Icon" onclick="logout()"> Logout</button>
+    </aside>
+
+    <div class="main-area-wrapper">
+      <main class="main">
+        
+
+        <div class="detail-konseling-card card">
+          <h2>Detail Konseling</h2>
+          <form id="konselingForm">
+            <div class="readonly-info-section">
+              <div class="readonly-info-item">
+                <i class="icon icon-user"></i> <span id="namaPasienDisplay">Keana Ferdinan</span>
+              </div>
+              <div class="readonly-info-item">
+                <i class="icon icon-calendar"></i> <span id="jadwalDisplay">Selasa, 15 April 2025</span>
+              </div>
+              <div class="readonly-info-item">
+                <i class="icon icon-clock"></i> <span id="waktuDisplay">08.00 - 10.00 WIB</span>
+              </div>
+              <div class="readonly-info-item">
+                <i class="icon icon-location-pin"></i> <span id="tipeSesiDisplay">Daring</span>
+              </div>
+            </div>
+            <hr style="margin: 20px 0; border-color: #E5E7EB;">
+
+            <div class="form-group">
+              <label for="jenisKunjungan">Jenis Kunjungan:</label>
+              <span class="readonly-text" id="jenisKunjunganDisplay">Daring</span>
+              <select id="jenisKunjungan" name="jenisKunjungan" class="form-control" style="display:none;">
+                <option value="">Pilih Jenis Kunjungan</option>
+                <option value="baru">Baru</option>
+                <option value="lanjut">Lanjut</option>
+                <option value="selesai">Selesai</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="keluhan">Keluhan:</label>
+              <div class="readonly-text" id="keluhanDisplay">
+                <ul>
+                  <li>Kurang tidur</li>
+                  <li>Susah Makan</li>
+                </ul>
+              </div>
+              <textarea id="keluhan" name="keluhan" class="form-control" rows="4" style="display:none;"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="hasilDiagnosa">Hasil Diagnosa:</label>
+              <div class="readonly-text" id="hasilDiagnosaDisplay">Belum ada diagnosa.</div>
+              <textarea id="hasilDiagnosa" name="hasilDiagnosa" class="form-control" rows="4" placeholder="Isi teks diagnosa disini..." style="display:none;"></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" id="editBtn" class="btn btn-edit">Edit</button>
+              <button type="submit" id="simpanBtn" class="btn btn-simpan" style="display:none;">Simpan</button>
+            </div>
+          </form>
+        </div>
+      </main>
+
+        <a href="https://studentaffairs.telkomuniversity.ac.id/konseling-gratis-untuk-mahasiswa-telkom-university/" target="_blank" style="text-decoration: none; color: inherit;">
+        <aside class="news">
+            <h4>Berita Telkom University</h4>
+            <img src="assets/webpsikolog/berita.png" alt="Berita Thumbnail" class="berita-thumbnail">
+            <p><strong>Begini Cara Menggunakan Layanan BK</strong></p>
+            <p>(Whatsapp Only)</p>
+        </aside>
+        </a>
+
+    </div>
+  </div>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>    
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="js/configurasi-firebase.js"></script>
+  <script>
+    function logout() {
+        firebase.auth().signOut().then(() => {
+            window.location.href = '/login'; // Redirect to login page after logout
+        }).catch((error) => {
+            console.error('Error during logout:', error);
+            alert('Gagal logout: ' + error.message);
+        });
+    };
+document.addEventListener('DOMContentLoaded', function() {
+    let initialData = {
+        namaPasien: "",
+        jadwal: "",
+        waktu: "",
+        tipeSesi: "",
+        jenisKunjungan: "",
+        keluhan: [],
+        hasilDiagnosa: ""
+    };
+
+    const form = document.getElementById('konselingForm');
+    const editBtn = document.getElementById('editBtn');
+    const simpanBtn = document.getElementById('simpanBtn');
+
+    const jenisKunjunganDisplay = document.getElementById('jenisKunjunganDisplay');
+    const jenisKunjunganInput = document.getElementById('jenisKunjungan');
+    const keluhanDisplay = document.getElementById('keluhanDisplay');
+    const keluhanInput = document.getElementById('keluhan');
+    const hasilDiagnosaDisplay = document.getElementById('hasilDiagnosaDisplay');
+    const hasilDiagnosaInput = document.getElementById('hasilDiagnosa');
+
+    // Function to populate display and input fields
+    function populateFields() {
+        document.getElementById('namaPasienDisplay').innerText = initialData.namaPasien || '-';
+        document.getElementById('jadwalDisplay').innerText = initialData.jadwal || '-';
+        document.getElementById('waktuDisplay').innerText = initialData.waktu || '-';
+        document.getElementById('tipeSesiDisplay').innerText = initialData.tipeSesi || '-';
+
+        const selectedKunjunganOption = Array.from(jenisKunjunganInput.options).find(opt => opt.value === initialData.jenisKunjungan);
+        jenisKunjunganDisplay.innerText = selectedKunjunganOption ? selectedKunjunganOption.text : 'Belum dipilih';
+        jenisKunjunganInput.value = initialData.jenisKunjungan;
+
+        let keluhanHTML = '<div>-</div>';
+        if (initialData.keluhan && initialData.keluhan.length > 0) {
+            keluhanHTML = `<ul>${initialData.keluhan.map(item => `<li>${item.trim()}</li>`).join('')}</ul>`;
+        }
+        keluhanDisplay.innerHTML = keluhanHTML;
+        // When setting the value for textarea, join with commas for easy editing
+        keluhanInput.value = initialData.keluhan.join(', ');
+
+        hasilDiagnosaDisplay.innerText = initialData.hasilDiagnosa || "Belum ada diagnosa.";
+        hasilDiagnosaInput.value = initialData.hasilDiagnosa;
+        if (initialData.hasilDiagnosa === "") {
+            hasilDiagnosaInput.placeholder = "Isi teks diagnosa disini...";
+        }
+    }
+
+    // Function to toggle edit mode
+    function toggleEditMode(isEditing) {
+        if (isEditing) {
+            jenisKunjunganDisplay.style.display = 'none';
+            jenisKunjunganInput.style.display = 'block';
+
+            keluhanDisplay.style.display = 'none';
+            keluhanInput.style.display = 'block';
+
+            hasilDiagnosaDisplay.style.display = 'none';
+            hasilDiagnosaInput.style.display = 'block';
+
+            editBtn.style.display = 'none';
+            simpanBtn.style.display = 'inline-block';
+        } else {
+            jenisKunjunganDisplay.style.display = 'block';
+            jenisKunjunganInput.style.display = 'none';
+
+            keluhanDisplay.style.display = 'block';
+            keluhanInput.style.display = 'none';
+
+            hasilDiagnosaDisplay.style.display = 'block';
+            hasilDiagnosaInput.style.display = 'none';
+
+            editBtn.style.display = 'inline-block';
+            simpanBtn.style.display = 'none';
+        }
+    }
+
+    // Event listener for edit button
+    editBtn.addEventListener('click', function() {
+        toggleEditMode(true);
+    });
+
+    // Event listener for form submission (Save button)
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Parse keluhan input by comma and filter empty strings
+        initialData.jenisKunjungan = jenisKunjunganInput.value;
+        initialData.keluhan = keluhanInput.value.split(',').map(item => item.trim()).filter(item => item !== '');
+        initialData.hasilDiagnosa = hasilDiagnosaInput.value;
+
+        // Save to Firebase (assuming you have a 'jadwal_konseling' node and an ID)
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        if (id) {
+            const dbRef = firebase.database().ref('jadwal_konseling/' + id);
+            dbRef.update({
+                    jenis_kunjungan: initialData.jenisKunjungan,
+                    keluhan: initialData.keluhan,
+                    diagnosa: initialData.hasilDiagnosa
+                })
+                .then(() => {
+                    alert('Berhasil disimpan');
+                    toggleEditMode(false); // Switch back to display mode
+                    populateFields(); // Re-populate display fields with updated data
+                })
+                .catch(error => {
+                    console.error("Error updating data:", error);
+                    alert('Gagal menyimpan data: ' + error.message);
+                });
+        } else {
+            console.error('ID jadwal konseling tidak ditemukan di URL, tidak bisa menyimpan.');
+            alert('Gagal menyimpan: ID konseling tidak ditemukan.');
+        }
+    });
+
+    // Fetch and display initial data based on URL ID
+    function getJadwalKonselingById(id) {
+        const dbRef = firebase.database().ref('jadwal_konseling/' + id);
+        return dbRef.once('value').then(snapshot => {
+            if (snapshot.exists()) {
+                return snapshot.val();
+            } else {
+                throw new Error('Data jadwal konseling tidak ditemukan');
+            }
+        });
+    }
+
+    function getUserById(userId) {
+        return firebase.database().ref('users/' + userId).once('value').then(snapshot => {
+            if (snapshot.exists()) {
+                return snapshot.val();
+            } else {
+                throw new Error('Data user tidak ditemukan');
+            }
+        });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    if (id) {
+        getJadwalKonselingById(id)
+            .then(jadwalData => {
+                const userId = jadwalData.userId || jadwalData.uid;
+                if (!userId) throw new Error('User ID tidak ditemukan di data jadwal konseling');
+
+                return getUserById(userId).then(userData => {
+                    initialData.namaPasien = userData.username || '-';
+                    initialData.jadwal = jadwalData.tanggal || '-';
+                    initialData.waktu = jadwalData.waktu || '-';
+                    initialData.tipeSesi = jadwalData.media || '-';
+                    initialData.jenisKunjungan = jadwalData.jenis_kunjungan || ''; // Ensure this matches option values
+                    initialData.keluhan = Array.isArray(jadwalData.keluhan) ? jadwalData.keluhan : (jadwalData.keluhan ? [jadwalData.keluhan] : []);
+                    initialData.hasilDiagnosa = jadwalData.diagnosa || '';
+                    document.getElementById('nama-header').innerText = jadwalData.psikolog || 'Pengguna';
+                    populateFields();
+                    toggleEditMode(false); // Start in display mode
+                });
+            })
+            .catch(error => {
+                console.error(error.message);
+                // Handle error, e.g., show a message to the user
+            });
+    } else {
+        console.error('ID jadwal konseling tidak ditemukan di URL');
+        // Optionally, redirect or show a message
+    }
+
+    // Sidebar submenu logic (existing code)
+    const submenuToggleItems = document.querySelectorAll('.sidebar .menu-item.has-submenu .menu-link');
+    submenuToggleItems.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const parentItem = this.closest('.menu-item.has-submenu');
+            if (parentItem) {
+                parentItem.classList.toggle('submenu-open');
+                const activeSubmenuItem = parentItem.querySelector('.submenu-item.active');
+                if (parentItem.classList.contains('submenu-open') && activeSubmenuItem) {
+                    this.classList.add('parent-active');
+                } else {
+                    this.classList.remove('parent-active');
+                }
+            }
+        });
+        const parentItem = link.closest('.menu-item.has-submenu');
+        if (parentItem && parentItem.querySelector('.submenu-item.active')) {
+            parentItem.classList.add('submenu-open');
+            link.classList.add('parent-active');
+        }
+    });
+});
+  
+  </script>
+</body>
+</html>
