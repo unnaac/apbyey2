@@ -16,7 +16,6 @@ class FirebaseServiceProvider extends ServiceProvider
                 ->createAuth();
         });
     }
-
     public function boot()
     {
         //

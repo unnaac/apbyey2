@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KonselingController;
-
+use App\Http\Controllers\ChatbotController;
 
 Route::get('/', function () {
     return view('login');
@@ -61,3 +61,45 @@ Route::get('/konseling', function () {
 });
 
 Route::get('/detailkonseling', [KonselingController::class, 'show'])->name('detailkonseling.show');
+Route::get('/ppksMahasiswa', function () {
+    return view('ppksMahasiswa');
+});
+
+Route::get('/buatLaporanMahasiswa', function () {
+    return view('buatLaporanMahasiswa');
+});
+
+Route::get('/riwayatLaporanMahasiswa', function () {
+    return view('riwayatLaporanMahasiswa');
+});
+
+Route::get('/BimbinganKonselingMahasiswa', function () {
+    return view('BimbinganKonselingMahasiswa');
+});
+
+Route::get('/buatJadwalMahasiswa', function () {
+    return view('buatJadwalMahasiswa');
+});
+
+Route::get('/riwayatKonselingMahasiswa', function () {
+    return view('riwayatKonselingMahasiswa');
+});
+
+Route::get('/emosikuMahasiswa', function () {
+    return view('emosikuMahasiswa');
+});
+
+Route::get('/buatCatatanMahasiswa', function () {
+    return view('buatCatatanMahasiswa');
+});
+
+Route::get('/riwayatCatatanMahasiswa', function () {
+    return view('riwayatCatatanMahasiswa');
+});
+
+Route::get('/profile', function () {
+    return view('profile');
+});
+
+// Di routes/web.php atau routes/api.php
+Route::post('/tanya-groq', [ChatbotController::class, 'tanyaGroq'])->name('chatbot.ask');
