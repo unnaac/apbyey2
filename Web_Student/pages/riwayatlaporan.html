@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>TeluSafe - Riwayat Laporan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'telusafe': {
+                            50: '#FEF2F2', 100: '#FEE2E2', 200: '#FECACA', 300: '#FCA5A5',
+                            400: '#F87171', 500: '#EF4444', 600: '#DC2626', 700: '#B91C1C',
+                            800: '#991B1B', 900: '#7F1D1D', 950: '#450A0A'
+                        },
+                        'telusafe-red': '#C43B3B',
+                        'telusafe-light-red': '#F44343',
+                        'telusafe-pink': '#FEEAEA',
+                        'telusafe-dark-red': '#A63333',
+                        'neutral': {
+                            25: '#FCFCFD', 50: '#F9FAFB', 100: '#F3F4F6', 200: '#E5E7EB',
+                            300: '#D1D5DB', 400: '#9CA3AF', 500: '#6B7280', 600: '#4B5563',
+                            700: '#374151', 800: '#1F2937', 900: '#111827', 950: '#030712'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif']
+                    },
+                    borderRadius: { '4xl': '2rem', '5xl': '2.5rem' },
+                    boxShadow: {
+                        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+                        'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 30px -5px rgba(0, 0, 0, 0.05)',
+                        'strong': '0 10px 40px -10px rgba(0, 0, 0, 0.15), 0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+                        'glow': '0 0 20px rgba(239, 68, 68, 0.15)',
+                        'glow-strong': '0 0 30px rgba(239, 68, 68, 0.25)'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-down': 'slideDown 0.6s ease-out',
+                        'slide-left': 'slideLeft 0.6s ease-out',
+                        'slide-right': 'slideRight 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.5s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-soft': 'pulseSoft 2s infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'gradient-shift': 'gradientShift 3s ease-in-out infinite',
+                        'notification-bounce': 'notificationBounce 2s infinite',
+                        'table-row-enter': 'tableRowEnter 0.5s ease-out',
+                        'progress-fill': 'progressFill 2s ease-in-out'
+                    },
+                    keyframes: {
+                        fadeIn: { 
+                            '0%': { opacity: '0', transform: 'translateY(20px)' }, 
+                            '100%': { opacity: '1', transform: 'translateY(0)' } 
+                        },
+                        slideUp: { 
+                            '0%': { transform: 'translateY(30px)', opacity: '0' }, 
+                            '100%': { transform: 'translateY(0)', opacity: '1' } 
+                        },
+                        slideDown: { 
+                            '0%': { transform: 'translateY(-30px)', opacity: '0' }, 
+                            '100%': { transform: 'translateY(0)', opacity: '1' } 
+                        },
+                        slideLeft: { 
+                            '0%': { transform: 'translateX(30px)', opacity: '0' }, 
+                            '100%': { transform: 'translateX(0)', opacity: '1' } 
+                        },
+                        slideRight: { 
+                            '0%': { transform: 'translateX(-30px)', opacity: '0' }, 
+                            '100%': { transform: 'translateX(0)', opacity: '1' } 
+                        },
+                        scaleIn: { 
+                            '0%': { transform: 'scale(0.9)', opacity: '0' }, 
+                            '100%': { transform: 'scale(1)', opacity: '1' } 
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-15px)' }
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                            '50%': { transform: 'scale(1.05)', opacity: '0.8' }
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        },
+                        gradientShift: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        },
+                        notificationBounce: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.3)' }
+                        },
+                        tableRowEnter: {
+                            '0%': { transform: 'translateX(-20px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' }
+                        },
+                        progressFill: {
+                            '0%': { width: '0%' },
+                            '100%': { width: '100%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .sidebar-active {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .hover-lift {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .table-row {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .table-row:hover {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(248, 113, 113, 0.05));
+            transform: translateX(4px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table-row.selected {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(248, 113, 113, 0.1));
+            border-left: 4px solid #EF4444;
+            transform: translateX(8px);
+        }
+        
+        .table-row::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.1), transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .table-row:hover::before {
+            width: 100%;
+        }
+        
+        .status-badge {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .status-badge::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .status-badge:hover::after {
+            left: 100%;
+        }
+        
+        .action-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .action-button.view:hover {
+            background: linear-gradient(135deg, #EF4444, #F87171);
+            border-color: #EF4444;
+            color: white;
+        }
+        
+        .action-button.delete:hover {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+            border-color: #EF4444;
+            color: white;
+        }
+        
+        .detail-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+            transition: left 0.8s;
+        }
+        
+        .detail-card:hover::before {
+            left: 100%;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #DC2626, #EF4444, #F87171);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        .notification-pulse {
+            animation: notificationBounce 2s infinite;
+        }
+        
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .stagger-animation > * {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger-animation > *:nth-child(6) { animation-delay: 0.6s; }
+        .stagger-animation > *:nth-child(7) { animation-delay: 0.7s; }
+        .stagger-animation > *:nth-child(8) { animation-delay: 0.8s; }
+        
+        .evidence-placeholder {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        
+        .evidence-placeholder:hover {
+            border-color: #EF4444;
+            background: linear-gradient(135deg, #FEF2F2, #FEE2E2);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #EF4444, #F87171);
+            animation: progressFill 2s ease-in-out;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            transform: scale(1.02);
+            border-color: #EF4444;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-neutral-50 to-neutral-100 min-h-screen text-neutral-900 font-sans">
+    <div class="flex min-h-screen max-w-[1600px] mx-auto bg-white/60 backdrop-blur-sm rounded-none lg:rounded-4xl lg:m-4 shadow-strong overflow-hidden border border-white/20 animate-scale-in">
+        <!-- Sidebar -->
+        <aside class="bg-gradient-to-b from-telusafe-red to-telusafe-dark-red w-56 flex flex-col p-6 space-y-8 text-white select-none animate-slide-right">
+            <div class="flex items-center space-x-3 group">
+                <img src="../assets/Logo.png" alt="TeluSafe Logo" class="w-8 h-8 object-contain group-hover:rotate-12 transition-transform duration-300"/>
+                <span class="font-semibold text-lg leading-none select-text">TeluSafe</span>
+            </div>
+            
+            <nav class="flex flex-col space-y-6 text-sm font-semibold stagger-animation">
+                <a class="flex items-center space-x-3 text-white font-semibold nav-item rounded-lg p-2 transition-all duration-300 hover:bg-white hover:bg-opacity-20" href="#" onclick="navigateTo('home')">
+                    <i class="fas fa-th-large text-white text-lg"></i>
+                    <span>Beranda</span>
+                </a>
+                
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-2 font-semibold text-white nav-item rounded-lg p-2 transition-all duration-300 hover:bg-white hover:bg-opacity-20">
+                        <i class="fas fa-cogs text-white text-base"></i>
+                        <span>PPKS</span>
+                    </div>
+                    <div class="flex flex-col pl-7 space-y-1 text-sm font-normal">
+                        <a class="flex items-center space-x-2 hover:underline nav-item p-1 rounded" href="#" onclick="createReport()">
+                            <div class="w-5 h-5 bg-white rounded flex items-center justify-center">
+                                <i class="fas fa-plus text-telusafe-red text-xs"></i>
+                            </div>
+                            <span>Buat Laporan</span>
+                        </a>
+                        <a class="flex items-center space-x-2 hover:underline nav-item p-1 rounded sidebar-active" href="#" onclick="viewHistory()">
+                            <div class="w-5 h-5 bg-white rounded flex items-center justify-center">
+                                <i class="fas fa-history text-telusafe-red text-xs"></i>
+                            </div>
+                            <span>Riwayat Laporan</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-2 font-semibold text-white nav-item rounded-lg p-2 transition-all duration-300 hover:bg-white hover:bg-opacity-20">
+                        <i class="fas fa-user-friends text-white text-base"></i>
+                        <span>BK</span>
+                    </div>
+                    <div class="flex flex-col pl-7 space-y-1 text-sm font-normal">
+                        <a class="flex items-center space-x-2 hover:underline nav-item p-1 rounded" href="#" onclick="createSchedule()">
+                            <div class="w-5 h-5 bg-white rounded flex items-center justify-center">
+                                <i class="fas fa-calendar text-telusafe-red text-xs"></i>
+                            </div>
+                            <span>Buat Jadwal</span>
+                        </a>
+                        <a class="flex items-center space-x-2 hover:underline nav-item p-1 rounded" href="#" onclick="viewCounseling()">
+                            <div class="w-5 h-5 bg-white rounded flex items-center justify-center">
+                                <i class="fas fa-comments text-telusafe-red text-xs"></i>
+                            </div>
+                            <span>Riwayat Konseling</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-2 font-semibold text-white nav-item rounded-lg p-2 transition-all duration-300 hover:bg-white hover:bg-opacity-20">
+                        <i class="fas fa-smile text-white text-base"></i>
+                        <span>Emosiku</span>
+                    </div>
+                    <div class="flex flex-col pl-7 space-y-1 text-sm font-normal">
+                        <a class="flex items-center space-x-2 hover:underline nav-item p-1 rounded" href="#" onclick="createNote()">
+                            <div class="w-5 h-5 bg-white rounded flex items-center justify-center">
+                                <i class="fas fa-edit text-telusafe-red text-xs"></i>
+                            </div>
+                            <span>Buat Catatan Harian</span>
+                        </a>
+                        <a class="flex items-center space-x-2 hover:underline nav-item p-1 rounded" href="#" onclick="viewNotes()">
+                            <div class="w-5 h-5 bg-white rounded flex items-center justify-center">
+                                <i class="fas fa-book text-telusafe-red text-xs"></i>
+                            </div>
+                            <span>Catatan Harian</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <button aria-label="Logout" class="mt-auto flex items-center space-x-2 text-white text-sm opacity-70 hover:opacity-100 transition-all duration-300 nav-item p-2 hover:bg-red-700 rounded-lg" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 flex flex-col min-h-screen animate-fade-in">
+            <!-- Top bar -->
+            <header class="glass-effect p-6 border-b border-neutral-200/50 animate-slide-down">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                    <div class="relative max-w-xl flex-1">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-neutral-400"></i>
+                        </div>
+                        <input 
+                            class="w-full pl-12 pr-4 py-3 bg-white/50 border border-neutral-200/50 rounded-2xl focus:bg-white focus:border-telusafe-400 focus:ring-4 focus:ring-telusafe-100 transition-all duration-300 outline-none placeholder-neutral-400 hover:shadow-glow form-input" 
+                            placeholder="Search reports, dates, status..." 
+                            type="search"
+                            oninput="handleSearch(this.value)"
+                        />
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2 glass-effect rounded-full p-2 hover-lift cursor-pointer" onclick="showProfile()">
+                            <img src="../assets/iconorang 1.png" alt="User Profile" class="w-10 h-10 rounded-full object-cover"/>
+                            <div class="text-right pr-2">
+                                <p class="text-sm font-semibold leading-none">John Doe</p>
+                                <p class="text-xs text-neutral-500 leading-none">3rd year</p>
+                            </div>
+                        </div>
+                        <button aria-label="Notifications" class="relative p-3 glass-effect rounded-2xl hover-lift" onclick="showNotifications()">
+                            <i class="fas fa-bell text-neutral-600"></i>
+                            <div class="absolute -top-1 -right-1 w-3 h-3 bg-telusafe-500 rounded-full notification-pulse"></div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex-1 p-6 space-y-8 overflow-y-auto">
+                <!-- Main content area -->
+                <div class="space-y-6">
+                    <!-- Page Header -->
+                    <section class="animate-slide-up">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="w-12 h-12 bg-gradient-to-br from-telusafe-500 to-telusafe-600 rounded-xl flex items-center justify-center animate-float">
+                                <i class="fas fa-history text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-[28px] font-bold font-display bg-gradient-to-r from-telusafe-500 to-telusafe-600 bg-clip-text text-transparent">
+                                    Riwayat Laporan PPKS
+                                </h1>
+                                <p class="text-neutral-600">Kelola dan pantau semua laporan Anda</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Statistics Cards -->
+                    <section class="animate-slide-up">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 stagger-animation">
+                            <div class="glass-effect rounded-2xl p-6 shadow-soft hover-lift border border-white/50 cursor-pointer" onclick="filterReports('all')">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-file-alt text-blue-600"></i>
+                                    </div>
+                                    <span class="text-xs text-green-600 font-medium">+5%</span>
+                                </div>
+                                <p class="text-2xl font-bold gradient-text">12</p>
+                                <p class="text-sm text-neutral-600">Total Laporan</p>
+                            </div>
+                            
+                            <div class="glass-effect rounded-2xl p-6 shadow-soft hover-lift border border-white/50 cursor-pointer" onclick="filterReports('reported')">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-exclamation-circle text-yellow-600"></i>
+                                    </div>
+                                    <span class="text-xs text-blue-600 font-medium">New</span>
+                                </div>
+                                <p class="text-2xl font-bold gradient-text">3</p>
+                                <p class="text-sm text-neutral-600">Dilaporkan</p>
+                            </div>
+                            
+                            <div class="glass-effect rounded-2xl p-6 shadow-soft hover-lift border border-white/50 cursor-pointer" onclick="filterReports('investigating')">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-search text-orange-600"></i>
+                                    </div>
+                                    <span class="text-xs text-orange-600 font-medium">Active</span>
+                                </div>
+                                <p class="text-2xl font-bold gradient-text">5</p>
+                                <p class="text-sm text-neutral-600">Investigasi</p>
+                            </div>
+                            
+                            <div class="glass-effect rounded-2xl p-6 shadow-soft hover-lift border border-white/50 cursor-pointer" onclick="filterReports('resolved')">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-check-circle text-green-600"></i>
+                                    </div>
+                                    <span class="text-xs text-purple-600 font-medium">Done</span>
+                                </div>
+                                <p class="text-2xl font-bold gradient-text">4</p>
+                                <p class="text-sm text-neutral-600">Selesai</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Detail Laporan Section -->
+                    <section class="glass-effect rounded-2xl p-6 shadow-soft hover-lift border border-white/50 detail-card animate-slide-up" id="detailSection">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Left side - Report Details -->
+                            <div class="lg:col-span-1 space-y-4">
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <div class="w-8 h-8 bg-telusafe-100 rounded-lg flex items-center justify-center animate-pulse-soft">
+                                        <i class="fas fa-file-text text-telusafe-600"></i>
+                                    </div>
+                                    <h2 class="text-[20px] font-semibold font-display">Detail Laporan</h2>
+                                    <div class="ml-auto">
+                                        <span class="status-badge bg-gradient-to-r from-telusafe-500 to-telusafe-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                            Dalam Investigasi
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <div class="p-4 bg-neutral-50 rounded-xl">
+                                        <p class="text-xs font-medium text-neutral-500 mb-1">ID Laporan</p>
+                                        <p class="text-lg font-bold text-telusafe-600" id="reportId">ID001</p>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <p class="text-sm font-medium text-neutral-600 mb-1">Tanggal</p>
+                                            <p class="text-sm text-neutral-800" id="reportDate">18 Maret 2023</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-neutral-600 mb-1">Waktu</p>
+                                            <p class="text-sm text-neutral-800" id="reportTime">14:30 WIB</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="text-sm font-medium text-neutral-600 mb-1">Jenis Laporan</p>
+                                        <p class="text-sm text-neutral-800" id="reportType">Korban</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="text-sm font-medium text-neutral-600 mb-1">Lokasi</p>
+                                        <p class="text-sm text-neutral-800" id="reportLocation">Jl. Telekomunikasi No. 1</p>
+                                    </div>
+                                    
+                                    <!-- Progress Bar -->
+                                    <div>
+                                        <p class="text-sm font-medium text-neutral-600 mb-2">Progress</p>
+                                        <div class="w-full bg-neutral-200 rounded-full h-2">
+                                            <div class="progress-bar h-2 rounded-full" style="width: 60%"></div>
+                                        </div>
+                                        <p class="text-xs text-neutral-500 mt-1">60% Complete</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Middle - Description -->
+                            <div class="lg:col-span-1">
+                                <div class="h-full">
+                                    <div class="flex items-center space-x-2 mb-3">
+                                        <i class="fas fa-align-left text-telusafe-500"></i>
+                                        <p class="text-sm font-medium text-neutral-600">Deskripsi Kejadian</p>
+                                    </div>
+                                    <div class="text-sm text-neutral-700 leading-relaxed bg-neutral-50 rounded-xl p-4 h-[280px] overflow-y-auto" id="reportDescription">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac turpis rutrum, cursus lorem at, sollicitudin nisl. Donec nec urna eget urna vestibulum sagittis eget ultrices ante. Proin volutpat elementum magna vel pellentesque.</p>
+                                        <br>
+                                        <p>Maecenas egestas cursus dui, aliquam eleifend tortor luctus in. Nullam non enim non ante volutpat blandit. Mauris ultrices arcu sed nunc mollis, id mollis tortor semper.</p>
+                                        <br>
+                                        <p>Mauris pulvinar consectetur purus, vel elementum sem luctus eget. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right side - Evidence -->
+                            <div class="lg:col-span-1">
+                                <div class="h-full">
+                                    <div class="flex items-center space-x-2 mb-3">
+                                        <i class="fas fa-paperclip text-telusafe-500"></i>
+                                        <p class="text-sm font-medium text-neutral-600">Bukti Pendukung</p>
+                                    </div>
+                                    <div class="evidence-placeholder rounded-2xl p-6 h-[280px] flex flex-col items-center justify-center text-center">
+                                        <div class="w-16 h-16 bg-neutral-200 rounded-2xl flex items-center justify-center mb-4 animate-bounce-gentle">
+                                            <i class="fas fa-folder-open text-neutral-400 text-2xl"></i>
+                                        </div>
+                                        <p class="text-sm text-neutral-500 font-medium">Tidak ada bukti yang dilampirkan</p>
+                                        <p class="text-xs text-neutral-400 mt-1">File akan muncul di sini setelah diupload</p>
+                                        <button class="mt-4 px-4 py-2 bg-telusafe-500 text-white rounded-lg text-xs hover:bg-telusafe-600 transition-colors" onclick="uploadEvidence()">
+                                            <i class="fas fa-upload mr-2"></i>
+                                            Upload Bukti
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Laporan PPKS Table -->
+                    <section class="glass-effect rounded-2xl p-6 shadow-soft border border-white/50 animate-slide-up">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-table text-telusafe-500 text-xl animate-wiggle"></i>
+                                <h2 class="text-[20px] font-semibold font-display">Daftar Laporan PPKS</h2>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <select class="px-4 py-2 border border-neutral-200 rounded-xl text-sm focus:border-telusafe-400 focus:ring-2 focus:ring-telusafe-100 outline-none bg-white" onchange="sortTable(this.value)">
+                                    <option value="date">Urutkan: Tanggal</option>
+                                    <option value="status">Urutkan: Status</option>
+                                    <option value="type">Urutkan: Jenis</option>
+                                </select>
+                                <button class="px-4 py-2 bg-telusafe-500 text-white rounded-xl text-sm hover:bg-telusafe-600 transition-colors" onclick="exportReports()">
+                                    <i class="fas fa-download mr-2"></i>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full table-auto">
+                                <thead>
+                                    <tr class="border-b-2 border-neutral-200">
+                                        <th class="text-left py-4 px-4 font-semibold text-sm text-neutral-700">No</th>
+                                        <th class="text-left py-4 px-4 font-semibold text-sm text-neutral-700">Tanggal</th>
+                                        <th class="text-left py-4 px-4 font-semibold text-sm text-neutral-700">Waktu</th>
+                                        <th class="text-left py-4 px-4 font-semibold text-sm text-neutral-700">Jenis</th>
+                                        <th class="text-left py-4 px-4 font-semibold text-sm text-neutral-700">Lokasi</th>
+                                        <th class="text-left py-4 px-4 font-semibold text-sm text-neutral-700">Status</th>
+                                        <th class="text-left py-4 px-4 font-semibold text-sm text-neutral-700">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reportTableBody" class="stagger-animation">
+                                    <tr class="table-row border-b border-neutral-100" data-report-id="1">
+                                        <td class="py-4 px-4 text-sm text-neutral-800 font-medium">1</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-800">18-03-2023</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-600">14:30</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-800">Korban</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-800">Jl. Telekomunikasi No. 1</td>
+                                        <td class="py-4 px-4">
+                                            <span class="status-badge bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
+                                                Dilaporkan
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-4">
+                                            <div class="flex space-x-2">
+                                                <button class="action-button view w-9 h-9 flex items-center justify-center rounded-full border border-neutral-300 hover:bg-neutral-100 hover:border-neutral-400 transition-all" title="View Details" onclick="viewReport(1)">
+                                                    <i class="fas fa-eye text-neutral-600 text-sm"></i>
+                                                </button>
+                                                <button class="action-button delete w-9 h-9 flex items-center justify-center rounded-full border border-neutral-300 hover:bg-red-50 hover:border-red-300 transition-all" title="Delete" onclick="deleteReport(1)">
+                                                    <i class="fas fa-trash text-neutral-600 hover:text-red-600 text-sm"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-row border-b border-neutral-100" data-report-id="2">
+                                        <td class="py-4 px-4 text-sm text-neutral-800 font-medium">2</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-800">15-03-2023</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-600">09:15</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-800">Saksi</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-800">Gedung B Lt. 3</td>
+                                        <td class="py-4 px-4">
+                                            <span class="status-badge bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800 px-3 py-1 rounded-full text-xs font-medium">
+                                                Investigasi
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-4">
+                                            <div class="flex space-x-2">
+                                                <button class="action-button view w-9 h-9 flex items-center justify-center rounded-full border border-neutral-300 hover:bg-neutral-100 hover:border-neutral-400 transition-all" title="View Details" onclick="viewReport(2)">
+                                                    <i class="fas fa-eye text-neutral-600 text-sm"></i>
+                                                </button>
+                                                <button class="action-button delete w-9 h-9 flex items-center justify-center rounded-full border border-neutral-300 hover:bg-red-50 hover:border-red-300 transition-all" title="Delete" onclick="deleteReport(2)">
+                                                    <i class="fas fa-trash text-neutral-600 hover:text-red-600 text-sm"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-row border-b border-neutral-100" data-report-id="3">
+                                        <td class="py-4 px-4 text-sm text-neutral-800 font-medium">3</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-800">12-03-2023</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-600">16:45</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-800">Korban</td>
+                                        <td class="py-4 px-4 text-sm text-neutral-800">Lab Komputer</td>
+                                        <td class="py-4 px-4">
+                                            <span class="status-badge bg-gradient-to-r from-green-100 to-green-200 text-green-800 px-3 py-1 rounded-full text-xs font-medium">
+                                                Selesai
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-4">
+                                            <div class="flex space-x-2">
+                                                <button class="action-button view w-9 h-9 flex items-center justify-center rounded-full border border-neutral-300 hover:bg-neutral-100 hover:border-neutral-400 transition-all" title="View Details" onclick="viewReport(3)">
+                                                    <i class="fas fa-eye text-neutral-600 text-sm"></i>
+                                                </button>
+                                                <button class="action-button delete w-9 h-9 flex items-center justify-center rounded-full border border-neutral-300 hover:bg-red-50 hover:border-red-300 transition-all" title="Delete" onclick="deleteReport(3)">
+                                                    <i class="fas fa-trash text-neutral-600 hover:text-red-600 text-sm"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="flex items-center justify-between mt-6 pt-4 border-t border-neutral-200">
+                            <p class="text-sm text-neutral-600">Showing 1-3 of 12 reports</p>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-2 border border-neutral-300 rounded-lg text-sm hover:bg-neutral-50 transition-colors" onclick="previousPage()">
+                                    <i class="fas fa-chevron-left mr-1"></i>
+                                    Previous
+                                </button>
+                                <button class="px-3 py-2 bg-telusafe-500 text-white rounded-lg text-sm hover:bg-telusafe-600 transition-colors">1</button>
+                                <button class="px-3 py-2 border border-neutral-300 rounded-lg text-sm hover:bg-neutral-50 transition-colors">2</button>
+                                <button class="px-3 py-2 border border-neutral-300 rounded-lg text-sm hover:bg-neutral-50 transition-colors">3</button>
+                                <button class="px-3 py-2 border border-neutral-300 rounded-lg text-sm hover:bg-neutral-50 transition-colors" onclick="nextPage()">
+                                    Next
+                                    <i class="fas fa-chevron-right ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 glass-effect border-l-4 border-telusafe-500 rounded-lg shadow-strong p-4 transform translate-x-full transition-all duration-500 z-50 max-w-sm">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-3 animate-bounce-gentle" id="toast-icon"></i>
+            <div>
+                <p class="font-semibold text-sm" id="toast-title">Success!</p>
+                <p class="text-xs text-neutral-600" id="toast-message">Action completed successfully!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-effect rounded-2xl p-6 max-w-md w-full mx-4 transform scale-90 transition-transform duration-300">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2" id="modal-title">Konfirmasi Hapus</h3>
+                <p class="text-neutral-600 mb-6" id="modal-message">Apakah Anda yakin ingin menghapus laporan ini?</p>
+                <div class="flex space-x-3">
+                    <button class="flex-1 px-4 py-2 border border-neutral-300 rounded-lg text-sm hover:bg-neutral-50 transition-colors" onclick="closeModal()">
+                        Batal
+                    </button>
+                    <button class="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors" onclick="confirmAction()">
+                        Hapus
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentReportData = null;
+        let pendingAction = null;
+
+        // Sample report data
+        const reportData = {
+            1: {
+                id: 'ID001',
+                date: '18 Maret 2023',
+                time: '14:30 WIB',
+                type: 'Korban',
+                location: 'Jl. Telekomunikasi No. 1',
+                status: 'Dilaporkan',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac turpis rutrum, cursus lorem at, sollicitudin nisl. Donec nec urna eget urna vestibulum sagittis eget ultrices ante. Proin volutpat elementum magna vel pellentesque. Maecenas egestas cursus dui, aliquam eleifend tortor luctus in.',
+                progress: 30
+            },
+            2: {
+                id: 'ID002',
+                date: '15 Maret 2023',
+                time: '09:15 WIB',
+                type: 'Saksi',
+                location: 'Gedung B Lt. 3',
+                status: 'Investigasi',
+                description: 'Mauris ultrices arcu sed nunc mollis, id mollis tortor semper. Mauris pulvinar consectetur purus, vel elementum sem luctus eget. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
+                progress: 60
+            },
+            3: {
+                id: 'ID003',
+                date: '12 Maret 2023',
+                time: '16:45 WIB',
+                type: 'Korban',
+                location: 'Lab Komputer',
+                status: 'Selesai',
+                description: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.',
+                progress: 100
+            }
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load first report details by default
+            viewReport(1);
+            
+            // Initialize table row click handlers
+            initializeTableHandlers();
+            
+            // Initialize search functionality
+            initializeSearch();
+            
+            showToast('Page Loaded', 'Riwayat laporan berhasil dimuat', 'success');
+        });
+
+        function initializeTableHandlers() {
+            const tableRows = document.querySelectorAll('.table-row');
+            tableRows.forEach(row => {
+                row.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on action buttons
+                    if (!e.target.closest('button')) {
+                        // Remove selection from all rows
+                        tableRows.forEach(r => r.classList.remove('selected'));
+                        // Add selection to clicked row
+                        this.classList.add('selected');
+                        
+                        // Get report ID and update details
+                        const reportId = parseInt(this.getAttribute('data-report-id'));
+                        viewReport(reportId);
+                        
+                        // Create selection effect
+                        createSelectionEffect(this);
+                    }
+                });
+            });
+        }
+
+        function viewReport(reportId) {
+            const report = reportData[reportId];
+            if (report) {
+                // Update detail section with animation
+                updateDetailSection(report);
+                showToast('Report Loaded', `Menampilkan detail laporan ${report.id}`, 'info');
+            }
+        }
+
+        function updateDetailSection(report) {
+            // Update with smooth transition
+            const detailSection = document.getElementById('detailSection');
+            detailSection.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                document.getElementById('reportId').textContent = report.id;
+                document.getElementById('reportDate').textContent = report.date;
+                document.getElementById('reportTime').textContent = report.time;
+                document.getElementById('reportType').textContent = report.type;
+                document.getElementById('reportLocation').textContent = report.location;
+                document.getElementById('reportDescription').innerHTML = `<p>${report.description}</p>`;
+                
+                // Update progress bar
+                const progressBar = document.querySelector('.progress-bar');
+                progressBar.style.width = '0%';
+                setTimeout(() => {
+                    progressBar.style.width = report.progress + '%';
+                }, 200);
+                
+                // Update status badge
+                const statusBadge = document.querySelector('.status-badge');
+                let statusClass = 'from-blue-500 to-blue-600';
+                if (report.status === 'Investigasi') statusClass = 'from-orange-500 to-orange-600';
+                if (report.status === 'Selesai') statusClass = 'from-green-500 to-green-600';
+                
+                statusBadge.className = `status-badge bg-gradient-to-r ${statusClass} text-white px-3 py-1 rounded-full text-xs font-medium`;
+                statusBadge.textContent = report.status === 'Dilaporkan' ? 'Dalam Investigasi' : report.status;
+                
+                detailSection.style.opacity = '1';
+            }, 200);
+        }
+
+        function deleteReport(reportId) {
+            pendingAction = { type: 'delete', reportId: reportId };
+            showModal('Konfirmasi Hapus', `Apakah Anda yakin ingin menghapus laporan ID${reportId.toString().padStart(3, '0')}?`);
+        }
+
+        function showModal(title, message) {
+            const modal = document.getElementById('confirmModal');
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.querySelector('.glass-effect').classList.remove('scale-90');
+            modal.querySelector('.glass-effect').classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('confirmModal');
+            modal.querySelector('.glass-effect').classList.remove('scale-100');
+            modal.querySelector('.glass-effect').classList.add('scale-90');
+            
+            setTimeout(() => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }, 200);
+            
+            pendingAction = null;
+        }
+
+        function confirmAction() {
+            if (pendingAction && pendingAction.type === 'delete') {
+                const reportId = pendingAction.reportId;
+                const row = document.querySelector(`[data-report-id="${reportId}"]`);
+                
+                if (row) {
+                    // Animate row removal
+                    row.style.animation = 'slideRight 0.5s ease-out';
+                    setTimeout(() => {
+                        row.remove();
+                        showToast('Report Deleted', `Laporan ID${reportId.toString().padStart(3, '0')} berhasil dihapus`, 'success');
+                        
+                        // If this was the selected report, show the first remaining report
+                        const firstRow = document.querySelector('.table-row');
+                        if (firstRow) {
+                            const firstReportId = parseInt(firstRow.getAttribute('data-report-id'));
+                            viewReport(firstReportId);
+                        }
+                    }, 500);
+                }
+            }
+            
+            closeModal();
+        }
+
+        function createSelectionEffect(element) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 6; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'fixed w-2 h-2 bg-telusafe-500 rounded-full pointer-events-none z-50';
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                
+                const angle = (i * 60) * Math.PI / 180;
+                const distance = 30;
+                const endX = centerX + Math.cos(angle) * distance;
+                const endY = centerY + Math.sin(angle) * distance;
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${endX - centerX}px, ${endY - centerY}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 600,
+                    easing: 'ease-out'
+                }).onfinish = () => {
+                    document.body.removeChild(particle);
+                };
+            }
+        }
+
+        function initializeSearch() {
+            let searchTimeout;
+            const searchInput = document.querySelector('input[type="search"]');
+            
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    handleSearch(e.target.value);
+                }, 300);
+            });
+        }
+
+        function handleSearch(query) {
+            if (query.length > 0) {
+                // Simulate search with visual feedback
+                const tableRows = document.querySelectorAll('.table-row');
+                tableRows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    if (text.includes(query.toLowerCase())) {
+                        row.style.display = 'table-row';
+                        row.style.animation = 'tableRowEnter 0.3s ease-out';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                
+                showToast('Search Results', `Mencari: "${query}"`, 'info');
+            } else {
+                // Show all rows
+                const tableRows = document.querySelectorAll('.table-row');
+                tableRows.forEach(row => {
+                    row.style.display = 'table-row';
+                });
+            }
+        }
+
+        function filterReports(status) {
+            showToast('Filter Applied', `Filter: ${status}`, 'info');
+            // Implementation would filter table based on status
+        }
+
+        function sortTable(criterion) {
+            showToast('Table Sorted', `Diurutkan berdasarkan: ${criterion}`, 'info');
+            // Implementation would sort table based on criterion
+        }
+
+        function exportReports() {
+            showToast('Export Started', 'Mengekspor laporan...', 'info');
+            setTimeout(() => {
+                showToast('Export Complete', 'Laporan berhasil diekspor', 'success');
+            }, 2000);
+        }
+
+        function uploadEvidence() {
+            showToast('Upload Feature', 'Fitur upload bukti akan segera tersedia', 'info');
+        }
+
+        function previousPage() {
+            showToast('Navigation', 'Halaman sebelumnya', 'info');
+        }
+
+        function nextPage() {
+            showToast('Navigation', 'Halaman selanjutnya', 'info');
+        }
+
+        // Navigation functions
+        function navigateTo(page) {
+            showToast('Navigation', `Navigating to ${page}...`, 'info');
+        }
+
+        function createReport() {
+            showToast('Create Report', 'Opening report creation...', 'info');
+        }
+
+        function viewHistory() {
+            showToast('History', 'You are already viewing report history!', 'info');
+        }
+
+        function createSchedule() {
+            showToast('Schedule', 'Opening schedule creation...', 'info');
+        }
+
+        function viewCounseling() {
+            showToast('Counseling', 'Loading counseling history...', 'info');
+        }
+
+        function createNote() {
+            showToast('Daily Note', 'Opening daily note creator...', 'info');
+        }
+
+        function viewNotes() {
+            showToast('Notes', 'Loading your daily notes...', 'info');
+        }
+
+        function showProfile() {
+            showToast('Profile', 'Opening user profile...', 'info');
+        }
+
+        function showNotifications() {
+            showToast('Notifications', 'Loading notifications...', 'info');
+        }
+
+        function logout() {
+            showToast('Logout', 'Logging out...', 'warning');
+            setTimeout(() => {
+                showToast('Goodbye', 'Stay safe and take care!', 'success');
+            }, 1000);
+        }
+
+        function showToast(title, message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastTitle = document.getElementById('toast-title');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+            
+            // Reset classes
+            toastIcon.className = 'fas mr-3 animate-bounce-gentle';
+            toast.className = 'fixed top-4 right-4 glass-effect rounded-lg shadow-strong p-4 transform transition-all duration-500 z-50 max-w-sm';
+            
+            // Set content and styling based on type
+            switch(type) {
+                case 'success':
+                    toastIcon.className += ' fa-check-circle text-green-500';
+                    toast.className += ' border-l-4 border-green-500';
+                    break;
+                case 'warning':
+                    toastIcon.className += ' fa-exclamation-triangle text-yellow-500';
+                    toast.className += ' border-l-4 border-yellow-500';
+                    break;
+                case 'info':
+                    toastIcon.className += ' fa-info-circle text-blue-500';
+                    toast.className += ' border-l-4 border-blue-500';
+                    break;
+                case 'error':
+                    toastIcon.className += ' fa-times-circle text-red-500';
+                    toast.className += ' border-l-4 border-red-500';
+                    break;
+            }
+            
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+            
+            // Show toast
+            toast.style.transform = 'translateX(0)';
+            
+            // Hide after 4 seconds
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+            }, 4000);
+        }
+
+        // Add ripple effect to clickable elements
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.hover-lift, .nav-item, .action-button, .table-row, button')) {
+                const ripple = document.createElement('span');
+                const rect = e.target.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.className = 'absolute rounded-full bg-white/30 pointer-events-none';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                
+                const target = e.target.closest('.hover-lift, .nav-item, .action-button, .table-row, button');
+                if (target) {
+                    target.style.position = 'relative';
+                    target.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        if (ripple.parentNode) {
+                            ripple.parentNode.removeChild(ripple);
+                        }
+                    }, 600);
+                }
+            }
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
